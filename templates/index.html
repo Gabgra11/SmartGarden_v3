@@ -1,0 +1,48 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Democratic Plant Care System">
+    <meta name="keywords" content="Gardening, Plants, Vote, Technology">
+    <meta name="author" content="Gabriel Grais">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <header>
+    <div id="logo">
+        <a id="homeIcon" href="/">
+            <img src="/static/img/icon.svg">Vote2Grow
+        </a>
+    </div>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="data.html">Sensors</a>
+            </li>
+            <li>
+                <a href="vote.html">Vote</a>
+            </li>
+            <li>
+                <a href="about.html">About</a>
+            </li>
+            <li>
+                <a href="donate.html">Donate</a>
+            </li>
+        </ul>
+    </nav>
+    </header>
+
+    <table id="dataTable">
+        <tr>
+            <th id="moistureVal">100%</th>
+            <th id="temperatureVal">75°F</th>
+            <th id="humidityVal">50%</th>
+        </tr>
+    </table>
+
+</body>
+</html>

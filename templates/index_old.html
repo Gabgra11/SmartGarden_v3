@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://html5-templates.com/" />
+	<title>Vote2Grow</title>
+	<meta name="description" content="Vote daily to keep my plant alive!">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#83af9b">
+	<meta name="theme-color" content="#ffffff">
+	<!-- <link rel="stylesheet" href="style.css"> -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<script src="script.js">
+	</script>
+	<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js">
+
+	</script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+	<script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-auth.js">
+
+	</script>
+	<script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-firestore.js">
+
+	</script>
+
+	<script>
+		// Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyA9auIF5p8QXGsYztTFuFh5D2jdeb-MUuE",
+    authDomain: "smart-garden-v2.firebaseapp.com",
+    databaseURL: "https://smart-garden-v2.firebaseio.com",
+    projectId: "smart-garden-v2",
+    storageBucket: "smart-garden-v2.appspot.com",
+    messagingSenderId: "258732125661",
+    appId: "1:258732125661:web:37b97144519672d1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+	</script>
+
+	<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js">
+
+	</script>
+	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <script data-ad-client="ca-pub-9592893657218988" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+	<header>
+		<div id="logo"><a id="homeIcon" href="/"><img src="img/icon.svg">Vote2Grow</a></div>
+		<nav>  
+			<ul>
+				<li><a href="data.html">Sensor Data</a>
+        <li><a href="vote.html">Vote</a>
+        <li><a href="info.html">About</a>
+        <li><a href="donate.html">Donate</a>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<strong>Welcome to Vote2Grow! You can vote whether my plant, Seymore, should be watered today, or just check in on him.</strong>
+    <div id="firebaseui-auth-container"></div>
+	</section>
+	<section id="pageContent">
+		<main role="main">
+      <div id="voteDiv">
+        <button onclick="location.href='vote.html'" type="button" id="voteButton">Vote Here!</button>
+      </div>
+			<article>
+				<h2>About Seymore</h2>
+				<p>Seymore is a <a href=http://www.costafarms.com/plants/nerve-plant target="_blank">Nerve Plant (Fittonia 'Red Anne')</a> and thrives in moist conditions. It looks best when the soil is kept damp, but not soggy. Seymore enjoys low/medium light, and too much light will make his leaves crispy!</p>
+			</article>
+      <article>
+        <h2>About Voting</h2>
+        <p>In order to vote, you must first sign in with your Google account on the "Daily Vote" page. This ensures that users may only vote once per day and keeps the voting process fair and secure. Your account is solely used for preventing double votes. I do not have access to any passwords and I will never send you emails. If you receive emails from someone pretending to be me, please DM me on Reddit at <a href=https://www.reddit.com/u/gabgra11 target="_blank">u/Gabgra11</a>. Any suggestions or bugs may be sent here as well.
+      </article>
+      <article>
+        <h2>Donations</h2>
+        <p>I'm not a fan of web ads, so you'll never need an adblocker on my site. If you've enjoyed this project, please feel free to donate whatever you'd like at the "Donate" tab above. Any contributions would be greatly appreciated!</p>
+      </article>
+		</main>
+		<aside>
+			<div id="sidebar">
+        <div id="voteTable">
+          <h3>Vote Tally</h3>
+          <br>
+          <table id="voteTable">
+            <tr>
+            <th>Yes&nbsp;Votes</th>
+            <th>No&nbsp;Votes</th>
+            </tr>
+            <tr>
+            <td id="yesVotes"></td>
+            <td id="noVotes"></td>
+            </tr>
+          </table><br>
+        </div>
+      </div>
+			<div id="sidebar">
+        <h3>Social Media</h3>
+          <a href="https://www.reddit.com/r/takecareofourplants"><img src="img/reddit.png" style="width:50px;height:50px;padding:10px;"></a>
+          <a href="https://www.instagram.com/Seymoretheplant"><img src="img/ig.png" style="width:50px;height:50px;padding:10px;"></a>
+          <a href="https://www.tiktok.com/@seymoretheplant"><img src="img/tiktok.png" style="width:50px;height:50px;padding:10px;"></a>
+      </div>
+			<div id="sidebar">
+        <h3>Contact Me</h3>
+        <a href="https://www.reddit.com/message/compose/?to=Gabgra11"><img src="img/mailIcon2.png" style="width:50px;height:50px;padding:10px;"></a>
+      </div>
+		</aside>
+	</section>
+	<footer>
+    <p><a href="https://html5-templates.com/" target="_blank" rel="nofollow">Source</a> | <a href="tos.html"> Terms of Service</a> | <a href="policy.html">Privacy Policy</a></p>
+	</footer>
+</body>
+
+</html>
