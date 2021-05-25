@@ -1,6 +1,7 @@
 body,html {
 	background-color: rgb(255, 255, 255);
     padding-bottom: 25px;
+    font-family: Helvetica, Arial, sans-serif;
 }
 header {
     background: #83AF9B;
@@ -41,16 +42,8 @@ th {
     padding: 20px;
     font-size: 20px;
 }
-
-#logo {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 30px;
-    margin-right: 45px;
-    color: #FFF;
-}
-#logo img {
+#logoImage {
     width: 50px;
-    vertical-align: middle;
+    vertical-align: text-bottom;
     margin-right: 10px;
 }
