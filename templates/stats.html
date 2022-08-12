@@ -9,6 +9,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+        <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
     </head>
 
     <body>
@@ -52,34 +55,33 @@
             </div>
         </div>
 
-        <div style="margin:25px 100px 25px 100px;">
-            <section>
-                <h2>Welcome to my Smart Garden</h2>
-                <p>
-                    This is a democratic plant care system, where users vote whether my plant, Seymore, should be watered today. 
-                    Seymore is a <a href="https://www.costafarms.com//plants/nerve-plant">Nerve Plant (Fittonia 'Red Anne')</a> 
-                    and thrives in moist conditions. It's best when the soil is kept damp,
-                    but not soggy. Seymore enjoys low/medium light, and too much light will make his leaves crispy!
-                </p>
-            </section>
 
-            <section>
-                <h2>About Voting</h2>
-                <p>
-                    You may vote once per day, resetting at midnight (Central Time). Feel free to check out the live data to make 
-                    an informed decision about whether Seymore needs water today, or vote however you'd like! If the majority 
-                    votes in favor of watering Seymore, the water pump will be activated. 
-                </p>
-            </section>
-
-            <section>
-                <h2>Questions or Comments</h2>
-                <p>
-                    If you notice any bugs or have any questions or comments, please 
-                    <a href="https://www.reddit.com/message/compose/?to=Gabgra11">send me a message via Reddit!</a>
-                </p>
-            </section>
-        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">Moisture</div>
+                    <div class="card-body">
+                        <canvas id="moistBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">Humidity</div>
+                    <div class="card-body">
+                        <canvas id="humidBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">Temperature</div>
+                    <div class="card-body">
+                        <canvas id="tempBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+          </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

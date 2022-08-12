@@ -1,0 +1,162 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Democratic Plant Care System">
+    <meta name="keywords" content="Gardening, Plants, Vote, Technology">
+    <meta name="author" content="Gabriel Grais">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/about.js') }}"></script>
+</head>
+
+<body data-spy="scroll" data-target="#scrollspy" data-offset="120">
+
+    <nav id="top-nav" class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="/">
+            <img src="/static/img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+            Vote2Grow
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stats">Stats</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/donate">Donate</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <nav class="col-sm-3" id="scrollspy">
+                <nav class="nav nav-pills flex-column position-fixed">
+                    <a class="nav-link" href="#item-1">Item 1</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
+                        <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
+                    </nav>
+                    <a class="nav-link" href="#item-2">Item2</a>
+                    <a class="nav-link" href="#item-3">Item3</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
+                        <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+                    </nav>
+                </nav>
+            </nav>
+
+            <div class="col-sm-9">
+                <h4 id="item-1">Item 1</h4>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+                <h5 id="item-1-1">Item 1-1</h5>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+                <h5 id="item-1-2">Item 1-2</h5>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+                <h4 id="item-2">Item 2</h4>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+                <h4 id="item-3">Item 3</h4>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+                <h5 id="item-3-1">Item 3-1</h5>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+                <h5 id="item-3-2">Item 3-2</h5>
+                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
+                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
+                    laborum
+                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
+                    eiusmod
+                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
+                    adipisicing
+                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
+                    elit
+                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
