@@ -1,3 +1,13 @@
+"""
+TODO: Fill out readme.md
+TODO: Fill out About tab.
+TODO: Host website! On raspberry pi? Google Cloud?
+TODO: Implement live, 7-day data storage. CSV? SQLite?
+TODO: Implement live stream.
+TODO: Increase header nav size.
+TODO: Share header nav across all files. (Is this possible?)
+"""
+
 from flask import Flask, redirect, url_for, render_template, request
 
 app = Flask(__name__)
