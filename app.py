@@ -31,6 +31,14 @@ def about():
 def live():
     return render_template("live.html")
 
+@app.route("/tos")
+def tos():
+    return render_template("tos.html")
+
+@app.route("/policy")
+def policy():
+    return render_template("policy.html")
+
 
 if __name__ == "__main__":
     app.run()
