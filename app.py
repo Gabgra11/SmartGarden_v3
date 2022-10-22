@@ -1,5 +1,5 @@
 """
-TODO: Fill out readme.md
+TODO: Fill out readme.md setup
 TODO: Fill out About tab.
 TODO: Host website on github.io
 TODO: Implement live, 7-day data storage. CSV? SQLite?

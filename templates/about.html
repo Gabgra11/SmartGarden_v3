@@ -64,101 +64,49 @@
 
             <div class="col-8">
                 <h4 id="overview">Overview</h4>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                <p>Smart Garden v3 allows users to collectively care for a single house plant. Live moisture, humidity, and temperature data can be used to decide whether the plant should be watered today. Historical trends can be used to track watering patterns and influence future decisions.
                 </p>
                 <h5 id="software">Software</h5>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
+                <p>The Raspberry Pi runs a Python script which collects sensor data and pushes it to the web app. At the specified time, votes are counted. Majority vote determines whether the water pump is triggered.
+
+                    Google Authentication is used to securely prevent duplicate votes. This makes voting fair, safe, and accessible.
                 </p>
                 <h5 id="hardware">Hardware</h5>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
-                </p>
+                <p>The Smart Garden is comprised of the following:</p>
+                    <ul>
+                        <li>Raspberry Pi 3B</li>
+                        <li>Pimoroni Automation pHat Mini</li>
+                        <li>BMP280 module</li>
+                        <li>Capacitive Soil Moisture sensor</li>
+                        <li>5V DC Submersible Water Pump + Tubing</li>
+                    </ul>
+                    
+                    <p>The Automation Hat allows the Pi to control the water pump via its relay. The analog inputs also allow for capacitive soil moisture readings.</p>
                 <h4 id="inspiration">Inspiration</h4>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
-                </p>
+                <p>This project is inspired by reddit user, <a href=https://www.reddit.com/user/tylerjaywood/ target="_blank"> u/TylerJaywood</a>'s democratic plant watering system. The original program operated solely through Reddit. Vote2Grow aims to give more users the ability to take care of my plant by collecting votes from Reddit, Vote2Grow.com, or any future projects. Huge thanks to <a href=https://www.reddit.com/user/cdoern01/ target="_blank"> u/cdoern01</a> for the tips and suggestions and for running <a href=https://www.reddit.com/r/takecareofourplants target="blank">r/TakeCareOfOurPlants</a></p>
                 <h4 id="history">History</h4>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
-                </p>
-                <h5 id="v1">Smart Garden (2018-2020)</h5>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
-                </p>
-                <h5 id="v2">Vote2Grow v1</h5>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
-                </p>
-                <h5 id="v3">Vote2Grow v2</h5>
-                <p>Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna
-                    ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat
-                    laborum
-                    incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna
-                    eiusmod
-                    consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit
-                    adipisicing
-                    dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam non fugiat id cupidatat nulla
-                    elit
-                    cupidatat commodo velit ut eiusmod cupidatat elit dolore.
-                </p>
+                <h5 id="v1">Smart Garden v1 (2018-2020)</h5>
+                <p>The original system used the following:</p>
+                    <ul>
+                        <li>Raspberry Pi 3B</li>
+                        <li>Arduino Uno</li>
+                        <li>5V DC Water Pump with Silicone Tubing</li>
+                        <li>5V Relay</li>
+                        <li>Conductive Soil Probe</li>    
+                    </ul>
+                    <p>These sub-optimal components caused issues for users over time. The probes would corrode within a few months. The water pump was loud and inconsistent. The two-board setup took up a lot of space. Most notably, voting was limited to daily posts within the r/TakeCareOfOurPlants subreddit, limiting accessibility. In September, 2019, I began working on a new revision.</p>
+                <h5 id="v2">Smart Garden v2</h5>
+                <p>This newer system was built from the ground up in order to resolve the issues of the original Smart Garden. Here are the parts that were used in the Vote2Grow system:</p>
+                    <ul>
+                        <li>Raspberry Pi Zero W</li>
+                        <li>Pimoroni Automation pHAT Mini</li>
+                        <li>DHT11 Temperature and Humidity Sensor</li>
+                        <li>5V DC Water Pump</li>
+                        <li>Capacitive Soil Moisture Probe</li>    
+                    </ul>
+                <p>The biggest change was moving to Google Firebase. Not only would this provide protection in the case that the Raspberry Pi died suddenly before the final vote tally, but it also allowed for votes to be submitted from a variety of sources. The first source of votes, Reddit, remained the same. The only difference was how votes were stored. Instead of a local text file on the Pi, new votes were sent to the database, updating the vote count across all platforms. The second source was a webapp, Vote2Grow. The Arduino was swapped for the Automation pHAT, which made the whole setup more compact. The inconsistent water pump was replaced with a new pump, and the conductive soil probes were swapped for corrosion-free capacitive probes.</p>
+                <h5 id="v3">Smart Garden v3</h5>
+                <p>This is the most recent revision of the Smart Garden system. The DHT11 was swapped for a BMP280 module, which adds barometric pressure and altitude readings if desired. The Raspberry Pi Zero W was also swapped for the more powerful Pi 3B. Finally, the web app was redesigned to move away from Google Firebase, which was overkill for this purpose.</p>
             </div>
         </div>
     </div>
