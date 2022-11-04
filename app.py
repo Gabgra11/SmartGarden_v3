@@ -8,8 +8,6 @@ TODO: Implement live stream.
 TODO: Decrease footer height.
 TODO: Share header/footer nav across all files. (Is this possible?)
 TODO: Flesh out validate_login function
-TODO: Doesn't store user id for session
-
 """
 
 import config
@@ -17,21 +15,21 @@ import user
 import sqlite3
 import os
 from flask import Flask, redirect, url_for, render_template, request, jsonify
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, current_user
 
 login_manager = LoginManager()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('client_secret')
 login_manager.init_app(app)
 
-
 # Initialize connection to SQLite3 db:
 con = sqlite3.connect("vote2grow.db")
 cur = con.cursor()
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id=None):
     # res = cur.execute("SELECT user_id FROM Users WHERE user_id == " + user_id)
+    curr_user_id = user_id
     return user.User(user_id)
 
 @app.route("/")
@@ -51,14 +49,10 @@ def login():
 
 @app.route("/vote")
 def vote(): # Default to anonymous user
-    if len(request.args) != 1: # Should be one argument with user id
-        return redirect(url_for('login'))
-    user_id=request.args['user_id']
-    u = load_user(user_id)
-    if not u.is_authenticated:
+    if not current_user.is_authenticated:
         return redirect(url_for('login'))
     else:
-        return render_template("vote.html", user_id=u.get_id())
+        return render_template("vote.html")
 
 @app.route("/about")
 def about():
@@ -89,8 +83,8 @@ def loginhandler():
         return redirect(url_for('login'))
     else:
         curr_user = load_user(request_data[0])
-        login_user(curr_user)
-        return redirect(url_for('vote', user_id=curr_user.get_id()))
+        login_user(curr_user, remember=True)
+        return redirect(url_for('vote'))
 
 def validate_login(request_data):
     if (len(request_data) == 2):
