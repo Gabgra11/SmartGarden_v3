@@ -12,7 +12,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
         <script src="https://accounts.google.com/gsi/client" async defer></script>
-        <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/login.js') }}"></script>
     </head>
 
     <body>
@@ -59,7 +59,25 @@
             </div>
         </div>
 
-        <p>Logged in!</p>
+        {% if user_id == None %}
+        <div id="g_id_onload"
+            data-client_id="{{ client_id }}"
+            data-login_uri="{{ login_uri }}"
+            data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left">
+        </div>
+        {% else %}
+
+        <p>{{ user_id }}</p>
+
+        {% endif %}
 
         <footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
             <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
