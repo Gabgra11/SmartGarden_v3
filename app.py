@@ -1,13 +1,10 @@
 """
 TODO: Fill out readme.md setup
-TODO: Implement Google Authentication log-in
 TODO: Host website on github.io
 TODO: Implement live, 7-day data storage. CSV? SQLite?
 TODO: Implement live stream.
 TODO: Decrease footer height.
 TODO: Share header/footer nav across all files. jinja blocks extends
-TODO: Flesh out validate_login function
-TODO: Implement log out
 TODO: Pull stats data from db
 TODO: Config parser
 TODO: Hash load_user function, move to users.py
@@ -18,7 +15,7 @@ import user
 import os
 from flask import Flask, redirect, url_for, render_template, request
 import jwt
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_user, logout_user, current_user
 
 login_manager = LoginManager()
 app = Flask(__name__)
@@ -50,6 +47,11 @@ def vote():
 def login():
     credential = jwt.decode(request.form['credential'], options={"verify_signature": False}, algorithms="RS256")
     login_user(user.User(credential["email"]))
+    return redirect(url_for("vote"))
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    logout_user()
     return redirect(url_for("vote"))
 
 @app.route("/about")
