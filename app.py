@@ -4,7 +4,6 @@ TODO: Host website on github.io
 TODO: Implement live, 7-day data storage. CSV? SQLite?
 TODO: Implement live stream.
 TODO: Decrease footer height.
-TODO: Share header/footer nav across all files. jinja blocks extends
 TODO: Pull stats data from db
 TODO: Config parser
 TODO: Hash load_user function, move to users.py

@@ -1,99 +1,58 @@
-<!doctype html>
+{%extends "template.html" %}
+{%block content%}  
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Democratic Plant Care System">
-        <meta name="keywords" content="Gardening, Plants, Vote, Technology">
-        <meta name="author" content="Gabriel Grais">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
+<nav id="top-nav" class="navbar navbar-expand-sm navbar-dark fixed-top">
+    <a class="navbar-brand" href="/">
+        <img src="/static/img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Vote2Grow
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+        <a class="nav-link" href="/vote">Vote</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/stats">Stats</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/live">Live</a>
+        </li>
+    </ul>
+    </div>
+</nav>
 
-    <body>
-        <nav id="top-nav" class="navbar navbar-expand-sm navbar-dark fixed-top">
-            <a class="navbar-brand" href="/">
-                <img src="/static/img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-                Vote2Grow
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link" href="/vote">Vote</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/stats">Stats</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/live">Live</a>
-                </li>
-            </ul>
-            </div>
-        </nav>
+<div style="margin:25px 100px 25px 100px;">
+    <section>
+        <h2>Welcome to my Smart Garden</h2>
+        <p>
+            This is a democratic plant care system, where users vote whether my plant, Seymore, should be watered today. 
+            Seymore is a <a href="https://www.costafarms.com//plants/nerve-plant">Nerve Plant (Fittonia 'Red Anne')</a> 
+            and thrives in moist conditions. It's best when the soil is kept damp,
+            but not soggy. Seymore enjoys low/medium light, and too much light will make his leaves crispy!
+        </p>
+    </section>
 
-        <div class="container">
-            <div class="row" id="dataRow">
-                <div class="col-sm data">
-                    <h4>Moisture:</h4>
-                    <h3>50%</h3>
-                </div>
-                <div class="col-sm data">
-                    <h4>Humidity:</h4>
-                    <h3>40%</h3>
-                </div>
-                <div class="col-sm data">
-                    <h4>Temperature:</h4>
-                    <h3>70F</h3>
-                </div>
-            </div>
-        </div>
+    <section>
+        <h2>About Voting</h2>
+        <p>
+            You may vote once per day, resetting at midnight (Central Time). Feel free to check out the live data to make 
+            an informed decision about whether Seymore needs water today, or vote however you'd like! If the majority 
+            votes in favor of watering Seymore, the water pump will be activated. 
+        </p>
+    </section>
 
-        <div style="margin:25px 100px 25px 100px;">
-            <section>
-                <h2>Welcome to my Smart Garden</h2>
-                <p>
-                    This is a democratic plant care system, where users vote whether my plant, Seymore, should be watered today. 
-                    Seymore is a <a href="https://www.costafarms.com//plants/nerve-plant">Nerve Plant (Fittonia 'Red Anne')</a> 
-                    and thrives in moist conditions. It's best when the soil is kept damp,
-                    but not soggy. Seymore enjoys low/medium light, and too much light will make his leaves crispy!
-                </p>
-            </section>
-
-            <section>
-                <h2>About Voting</h2>
-                <p>
-                    You may vote once per day, resetting at midnight (Central Time). Feel free to check out the live data to make 
-                    an informed decision about whether Seymore needs water today, or vote however you'd like! If the majority 
-                    votes in favor of watering Seymore, the water pump will be activated. 
-                </p>
-            </section>
-
-            <section>
-                <h2>Questions or Comments</h2>
-                <p>
-                    If you notice any bugs or have any questions or comments, please 
-                    <a href="https://www.reddit.com/message/compose/?to=Gabgra11">send me a message via Reddit!</a>
-                </p>
-            </section>
-        </div>
-
-        <footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                <a class="text-reset fw-bold" href="tos" target="_blank">Terms of Service</a>
-                <a>|</a>
-                <a class="text-reset fw-bold" href="policy" target="_blank">Privacy Policy</a>
-            </div>
-        </footer>
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    </body>
-</html>
+    <section>
+        <h2>Questions or Comments</h2>
+        <p>
+            If you notice any bugs or have any questions or comments, please 
+            <a href="https://www.reddit.com/message/compose/?to=Gabgra11">send me a message via Reddit!</a>
+        </p>
+    </section>
+</div>
+{% endblock %}
