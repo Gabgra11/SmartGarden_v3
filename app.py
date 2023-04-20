@@ -1,15 +1,15 @@
 """
-TODO: Pull data from db for graphs in stats
-TODO: Pull live data from db for live data view
+TODO: Show user's current vote, if exists. Subsequent votes overwrite previous one.
+TODO: Fix formatting on vote page.
+TODO: Implement live moisture, humidity, temperature readings on all pages
 TODO: Verify token in /login https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
 TODO: Fill out readme.md setup
-TODO: Implement live, 7-day data storage. CSV? SQLite?
 TODO: Implement live stream.
 TODO: Decrease footer height.
 TODO: Share header/footer nav across all files. jinja blocks extends
 TODO: Pull stats data from db
 TODO: Config parser
-TODO: Hash load_user function, move to users.py
+TODO: Hash load_user function (?), move to users.py
 """
 
 import config
@@ -57,13 +57,25 @@ def stats():
 
     return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON,)
 
-@app.route("/vote")
+@app.route('/vote', methods=['GET', 'POST'])
 def vote():
+    conn = get_db_connection()
+    current_vote = db.get_user_vote(conn, current_user.get_id())
+
+    if request.method == 'POST':
+        match request.form['post_type']:
+            case 'vote':
+                user_id = request.form['user_id']
+                vote = request.form['voteRadioOptions'] # Yes = 1; No = -1
+                db.add_user_vote(conn, user_id, vote)
+                current_vote = int(vote)
+    
     return render_template(
         "vote.html",
         client_id = config.client_id,
         login_uri = config.login_uri,
-        user_id = current_user.get_id()
+        user_id = current_user.get_id(),
+        current_vote = current_vote
     )
 
 @app.route("/login", methods=["POST"])
