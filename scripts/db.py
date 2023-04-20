@@ -22,7 +22,7 @@ def add_user_vote(conn, user_id, vote):
 
     # Add new vote from user:
     command = 'INSERT INTO votes (timestamp, vote, user) VALUES (?, ?, ?)'
-    conn.execute(command, (dt.datetime.now().strftime("%S"), vote, user_id))
+    conn.execute(command, (dt.datetime.now().timestamp(), vote, user_id))
     conn.commit()
 
 def get_user_vote(conn, user_id):
