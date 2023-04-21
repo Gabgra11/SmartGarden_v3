@@ -41,16 +41,29 @@
         <div class="container">
             <div class="row" id="dataRow">
                 <div class="col-sm data">
+                    <h4>Votes</h4>
+                    <table>
+                        <tr>
+                            <th>Yes</th>
+                            <th>No</th>
+                        </tr>
+                        <tr>
+                            <td>{{ data['yes_votes'] }}</td>
+                            <td>{{ data['no_votes'] }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm data">
                     <h4>Moisture:</h4>
-                    <h3>50%</h3>
+                    <h3>{{ data['moisture'] }}</h3>
                 </div>
                 <div class="col-sm data">
                     <h4>Humidity:</h4>
-                    <h3>40%</h3>
+                    <h3>{{ data['humidity'] }}</h3>
                 </div>
                 <div class="col-sm data">
                     <h4>Temperature:</h4>
-                    <h3>70F</h3>
+                    <h3>{{ data['temperature'] }}</h3>
                 </div>
             </div>
         </div>

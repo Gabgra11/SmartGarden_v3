@@ -1,13 +1,10 @@
 """
-TODO: Show user's current vote, if exists. Subsequent votes overwrite previous one.
 TODO: Fix formatting on vote page.
-TODO: Implement live moisture, humidity, temperature readings on all pages
 TODO: Verify token in /login https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
 TODO: Fill out readme.md setup
 TODO: Implement live stream.
 TODO: Decrease footer height.
-TODO: Share header/footer nav across all files. jinja blocks extends
-TODO: Pull stats data from db
+TODO: Share header/footer, nav, stats across all files. jinja blocks extends
 TODO: Config parser
 TODO: Hash load_user function (?), move to users.py
 """
@@ -39,7 +36,8 @@ def get_db_connection():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    conn = get_db_connection()
+    return render_template("index.html", data=db.get_page_data(conn))
 
 @app.route("/stats")
 def stats():
@@ -55,7 +53,7 @@ def stats():
     humidJSON = bc.make_bar_chart(x, 'Day', humid_y, 'Humidity (%)', '7-Day Humidity History')
     tempJSON = bc.make_bar_chart(x, 'Day', temp_y, 'Temperature (°F)', '7-Day Temperature History')
 
-    return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON,)
+    return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON, data=db.get_page_data(conn))
 
 @app.route('/vote', methods=['GET', 'POST'])
 def vote():
@@ -75,7 +73,8 @@ def vote():
         client_id = config.client_id,
         login_uri = config.login_uri,
         user_id = current_user.get_id(),
-        current_vote = current_vote
+        current_vote = current_vote, 
+        data=db.get_page_data(conn)
     )
 
 @app.route("/login", methods=["POST"])
@@ -91,11 +90,13 @@ def logout():
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    conn = get_db_connection()
+    return render_template("about.html", data=db.get_page_data(conn))
 
 @app.route("/live")
 def live():
-    return render_template("live.html")
+    conn = get_db_connection()
+    return render_template("live.html", data=db.get_page_data(conn))
 
 @app.route("/tos")
 def tos():
