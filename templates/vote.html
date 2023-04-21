@@ -1,129 +1,53 @@
-<!doctype html>
+{% extends "base.html" %}
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Democratic Plant Care System">
-        <meta name="keywords" content="Gardening, Plants, Vote, Technology">
-        <meta name="author" content="Gabriel Grais">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
-        <script src="{{ url_for('static', filename='js/login.js') }}"></script>
-    </head>
+{% block head %}
+    {{ super() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}
 
-    <body>
-        <nav id="top-nav" class="navbar navbar-expand-sm navbar-dark fixed-top">
-            <a class="navbar-brand" href="/">
-                <img src="/static/img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-                Vote2Grow
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                <a class="nav-link" href="/vote">Vote <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/stats">Stats</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/live">Live</a>
-                </li>
-            </ul>
-            </div>
-        </nav>
+{% block content %}
+    {% if user_id == None %}
+    <div id="g_id_onload"
+        data-client_id="{{ client_id }}"
+        data-login_uri="{{ login_uri }}"
+        data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+    </div>
+    {% else %}
 
-        <div class="container">
-            <div class="row" id="dataRow">
-                <div class="col-sm data">
-                    <h4>Votes</h4>
-                    <table>
-                        <tr>
-                            <th>Yes</th>
-                            <th>No</th>
-                        </tr>
-                        <tr>
-                            <td>{{ data['yes_votes'] }}</td>
-                            <td>{{ data['no_votes'] }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm data">
-                    <h4>Moisture:</h4>
-                    <h3>{{ data['moisture'] }}</h3>
-                </div>
-                <div class="col-sm data">
-                    <h4>Humidity:</h4>
-                    <h3>{{ data['humidity'] }}</h3>
-                </div>
-                <div class="col-sm data">
-                    <h4>Temperature:</h4>
-                    <h3>{{ data['temperature'] }}</h3>
-                </div>
-            </div>
+    <p>{{ user_id }}</p>
+    <form method="POST">
+        <input type="hidden" name="post_type" value="vote">
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioYes" value=1
+            {% if current_vote == 1 %}
+                checked
+            {% endif %}
+            >
+            <label class="form-check-label" for="voteForm">Yes</label>
         </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioNo" value=-1
+            {% if current_vote == -1 %}
+                checked
+            {% endif %}
+            >
+            <label class="form-check-label" for="voteForm">No</label>
+        </div> <br><br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="/logout">Log out</a>
 
-        {% if user_id == None %}
-        <div id="g_id_onload"
-            data-client_id="{{ client_id }}"
-            data-login_uri="{{ login_uri }}"
-            data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin"
-            data-type="standard"
-            data-size="large"
-            data-theme="outline"
-            data-text="sign_in_with"
-            data-shape="rectangular"
-            data-logo_alignment="left">
-        </div>
-        {% else %}
-
-        <p>{{ user_id }}</p>
-        <form method="POST">
-            <input type="hidden" name="post_type" value="vote">
-            <input type="hidden" name="user_id" value="{{ user_id }}">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioYes" value=1
-                {% if current_vote == 1 %}
-                    checked
-                {% endif %}
-                >
-                <label class="form-check-label" for="voteForm">Yes</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioNo" value=-1
-                {% if current_vote == -1 %}
-                    checked
-                {% endif %}
-                >
-                <label class="form-check-label" for="voteForm">No</label>
-            </div> <br><br>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        <a href="/logout">Log out</a>
-
-        {% endif %}
-
-        <footer class="text-center text-lg-start bg-light text-muted fixed-bottom">
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                <a class="text-reset fw-bold" href="tos" target="_blank">Terms of Service</a>
-                <a>|</a>
-                <a class="text-reset fw-bold" href="policy" target="_blank">Privacy Policy</a>
-            </div>
-        </footer>
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    </body>
-</html>
+    {% endif %}
+{% endblock %}

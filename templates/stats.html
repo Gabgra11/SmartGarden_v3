@@ -1,126 +1,48 @@
-<!doctype html>
+{% extends "base.html" %}
 
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Democratic Plant Care System">
-        <meta name="keywords" content="Gardening, Plants, Vote, Technology">
-        <meta name="author" content="Gabriel Grais">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
-        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-    </head>
+{% block head %}
+    {{ super() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+{% endblock %}
 
-    <body>
-        <nav id="top-nav" class="navbar navbar-expand-sm navbar-dark fixed-top">
-            <a class="navbar-brand" href="/">
-                <img src="/static/img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-                Vote2Grow
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link" href="/vote">Vote</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item active">
-                <a class="nav-link" href="/stats">Stats <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/live">Live</a>
-                </li>
-            </ul>
-            </div>
-        </nav>
-
-        <div class="container">
-            <div class="row" id="dataRow">
-                <div class="col-sm data">
-                    <h4>Votes</h4>
-                    <table>
-                        <tr>
-                            <th>Yes</th>
-                            <th>No</th>
-                        </tr>
-                        <tr>
-                            <td>{{ data['yes_votes'] }}</td>
-                            <td>{{ data['no_votes'] }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm data">
-                    <h4>Moisture:</h4>
-                    <h3>{{ data['moisture'] }}</h3>
-                </div>
-                <div class="col-sm data">
-                    <h4>Humidity:</h4>
-                    <h3>{{ data['humidity'] }}</h3>
-                </div>
-                <div class="col-sm data">
-                    <h4>Temperature:</h4>
-                    <h3>{{ data['temperature'] }}</h3>
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">Moisture</div>
+                <div class="card-body">
+                    <div id='moistChart' class='moistChart'”></div>
+                    <script type='text/javascript'>
+                        var graphs = {{ moistJSON | safe }};
+                        Plotly.plot('moistChart',graphs,{});
+                    </script>
                 </div>
             </div>
         </div>
-
-
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">Moisture</div>
-                    <div class="card-body">
-                        <div id='moistChart' class='moistChart'”></div>
-                        <script type='text/javascript'>
-                            var graphs = {{ moistJSON | safe }};
-                            Plotly.plot('moistChart',graphs,{});
-                        </script>
-                    </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">Humidity</div>
+                <div class="card-body">
+                    <div id='humidChart' class='humidChart'”></div>
+                    <script type='text/javascript'>
+                        var graphs = {{ humidJSON | safe }};
+                        Plotly.plot('humidChart',graphs,{});
+                    </script>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">Humidity</div>
-                    <div class="card-body">
-                        <div id='humidChart' class='humidChart'”></div>
-                        <script type='text/javascript'>
-                            var graphs = {{ humidJSON | safe }};
-                            Plotly.plot('humidChart',graphs,{});
-                        </script>
-                    </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">Temperature</div>
+                <div class="card-body">
+                    <div id='tempChart' class='tempChart'”></div>
+                    <script type='text/javascript'>
+                        var graphs = {{ tempJSON | safe }};
+                        Plotly.plot('tempChart',graphs,{});
+                    </script>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">Temperature</div>
-                    <div class="card-body">
-                        <div id='tempChart' class='tempChart'”></div>
-                        <script type='text/javascript'>
-                            var graphs = {{ tempJSON | safe }};
-                            Plotly.plot('tempChart',graphs,{});
-                        </script>
-                    </div>
-                </div>
-            </div>
-          </div>
-
-          <footer class="text-center text-lg-start bg-light text-muted">
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                <a class="text-reset fw-bold" href="tos" target="_blank">Terms of Service</a>
-                <a>|</a>
-                <a class="text-reset fw-bold" href="policy" target="_blank">Privacy Policy</a>
-            </div>
-        </footer>
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    </body>
-</html>
+        </div>
+    </div>
+{% endblock %}

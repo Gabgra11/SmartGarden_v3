@@ -4,7 +4,6 @@ TODO: Verify token in /login https://developers.google.com/identity/gsi/web/guid
 TODO: Fill out readme.md setup
 TODO: Implement live stream.
 TODO: Decrease footer height.
-TODO: Share header/footer, nav, stats across all files. jinja blocks extends
 TODO: Config parser
 TODO: Hash load_user function (?), move to users.py
 """
