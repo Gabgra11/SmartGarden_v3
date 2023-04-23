@@ -15,7 +15,7 @@
 
     <body>
         {% block nav %}
-        <nav id="top-nav" class="navbar navbar-expand-sm navbar-dark fixed-top">
+        <nav id="top-nav" class="navbar navbar-expand-sm navbar-dark fixed-top justify-content-between">
             <a class="navbar-brand" href="/">
                 <img src="/static/img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
                 Vote2Grow
@@ -39,11 +39,16 @@
                 </li>
             </ul>
             </div>
+            <!-- <div class="float-right"> -->
+                {% if user_id %}
+                    <span class="navbar-text p-0">Signed in as: {{ user_id }}<a class="inline-block btn btn-primary ml-3" href="/logout">Log out</a></span>
+                {% endif %}
+            <!-- </div> -->
         </nav>
         {% endblock %}
 
         {% block stats %}
-        <div class="container">
+        <div class="container pt-3">
             <div class="row" id="dataRow">
                 <div class="col-sm data">
                     <h4>Votes</h4>

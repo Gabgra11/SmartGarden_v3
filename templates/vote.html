@@ -24,30 +24,34 @@
         data-logo_alignment="left">
     </div>
     {% else %}
-
-    <p>{{ user_id }}</p>
-    <form method="POST">
-        <input type="hidden" name="post_type" value="vote">
-        <input type="hidden" name="user_id" value="{{ user_id }}">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioYes" value=1
-            {% if current_vote == 1 %}
-                checked
-            {% endif %}
-            >
-            <label class="form-check-label" for="voteForm">Yes</label>
+    <div class="card w-25 m-auto">
+        <div class="card-header">Vote</div>
+        <div class="card-body">
+            <p>{{ user_id }}</p> <!--TODO: Remove this-->
+            <p>Should Seymore be watered today?</p>
+            <form method="POST">
+                <input type="hidden" name="post_type" value="vote">
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioYes" value=1
+                    {% if current_vote == 1 %}
+                        checked
+                    {% endif %}
+                    >
+                    <label class="form-check-label" for="voteForm">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioNo" value=-1
+                    {% if current_vote == -1 %}
+                        checked
+                    {% endif %}
+                    >
+                    <label class="form-check-label" for="voteForm">No</label>
+                </div> <br><br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <a href="/logout">Log out</a>
         </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioNo" value=-1
-            {% if current_vote == -1 %}
-                checked
-            {% endif %}
-            >
-            <label class="form-check-label" for="voteForm">No</label>
-        </div> <br><br>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <a href="/logout">Log out</a>
-
+    </div>
     {% endif %}
 {% endblock %}

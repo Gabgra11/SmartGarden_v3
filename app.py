@@ -1,10 +1,9 @@
 """
-TODO: Fix formatting on vote page.
 TODO: Verify token in /login https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
 TODO: Fill out readme.md setup
 TODO: Implement live stream.
 TODO: Decrease footer height.
-TODO: Config parser
+TODO: Config parser (Plant name, google auth info, etc.)
 TODO: Hash load_user function (?), move to users.py
 """
 
@@ -36,7 +35,7 @@ def get_db_connection():
 @app.route("/")
 def home():
     conn = get_db_connection()
-    return render_template("index.html", data=db.get_page_data(conn))
+    return render_template("index.html", data=db.get_page_data(conn), user_id = current_user.get_id())
 
 @app.route("/stats")
 def stats():
@@ -52,7 +51,7 @@ def stats():
     humidJSON = bc.make_bar_chart(x, 'Day', humid_y, 'Humidity (%)', '7-Day Humidity History')
     tempJSON = bc.make_bar_chart(x, 'Day', temp_y, 'Temperature (°F)', '7-Day Temperature History')
 
-    return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON, data=db.get_page_data(conn))
+    return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON, data=db.get_page_data(conn), user_id = current_user.get_id())
 
 @app.route('/vote', methods=['GET', 'POST'])
 def vote():
@@ -85,17 +84,17 @@ def login():
 @app.route("/logout", methods=["GET"])
 def logout():
     logout_user()
-    return redirect(url_for("vote"))
+    return redirect(url_for("home"))
 
 @app.route("/about")
 def about():
     conn = get_db_connection()
-    return render_template("about.html", data=db.get_page_data(conn))
+    return render_template("about.html", data=db.get_page_data(conn), user_id = current_user.get_id())
 
 @app.route("/live")
 def live():
     conn = get_db_connection()
-    return render_template("live.html", data=db.get_page_data(conn))
+    return render_template("live.html", data=db.get_page_data(conn), user_id = current_user.get_id())
 
 @app.route("/tos")
 def tos():
