@@ -1,10 +1,8 @@
 """
-TODO: Verify token in /login https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
 TODO: Fill out readme.md setup
 TODO: Implement live stream.
-TODO: Decrease footer height.
 TODO: Config parser (Plant name, google auth info, etc.)
-TODO: Hash load_user function (?), move to users.py
+TODO: Move load_user to user.py
 """
 
 import config
@@ -15,8 +13,8 @@ import scripts.db as db
 import os
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request
-import jwt
 from flask_login import LoginManager, login_user, logout_user, current_user
+import json
 
 login_manager = LoginManager()
 app = Flask(__name__)
@@ -25,7 +23,8 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id=None):
-    return user.User(user_id)
+    conn = get_db_connection()
+    return db.get_user_by_id(conn, user_id)
 
 def get_db_connection():
     conn = sqlite3.connect('db/database.db')
@@ -35,7 +34,8 @@ def get_db_connection():
 @app.route("/")
 def home():
     conn = get_db_connection()
-    return render_template("index.html", data=db.get_page_data(conn), user_id = current_user.get_id())
+    user_info = db.get_user_json_by_id(conn, current_user.get_id())
+    return render_template("index.html", data=db.get_page_data(conn), user = user_info)
 
 @app.route("/stats")
 def stats():
@@ -50,13 +50,16 @@ def stats():
     moistJSON = bc.make_bar_chart(x, 'Day', moist_y, 'Moisture (%)', '7-Day Moisture History')
     humidJSON = bc.make_bar_chart(x, 'Day', humid_y, 'Humidity (%)', '7-Day Humidity History')
     tempJSON = bc.make_bar_chart(x, 'Day', temp_y, 'Temperature (°F)', '7-Day Temperature History')
+    
+    user_info = db.get_user_json_by_id(conn, current_user.get_id())
 
-    return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON, data=db.get_page_data(conn), user_id = current_user.get_id())
+    return render_template("stats.html", moistJSON=moistJSON, humidJSON=humidJSON, tempJSON=tempJSON, data=db.get_page_data(conn), user = user_info)
 
 @app.route('/vote', methods=['GET', 'POST'])
 def vote():
     conn = get_db_connection()
     current_vote = db.get_user_vote(conn, current_user.get_id())
+    user_info = db.get_user_json_by_id(conn, current_user.get_id())
 
     if request.method == 'POST':
         match request.form['post_type']:
@@ -70,15 +73,17 @@ def vote():
         "vote.html",
         client_id = config.client_id,
         login_uri = config.login_uri,
-        user_id = current_user.get_id(),
+        user = user_info,
         current_vote = current_vote, 
         data=db.get_page_data(conn)
     )
 
 @app.route("/login", methods=["POST"])
 def login():
-    credential = jwt.decode(request.form['credential'], options={"verify_signature": False}, algorithms="RS256")
-    login_user(user.User(credential["email"]))
+    conn = get_db_connection()
+    # credential = jwt.decode(request.form['credential'], options={"verify_signature": False}, algorithms="RS256")
+    user_info = user.verify_token(request.form['credential'])
+    login_user(user.User(user_info, conn))
     return redirect(url_for("vote"))
 
 @app.route("/logout", methods=["GET"])
@@ -89,12 +94,18 @@ def logout():
 @app.route("/about")
 def about():
     conn = get_db_connection()
-    return render_template("about.html", data=db.get_page_data(conn), user_id = current_user.get_id())
+    
+    user_info = db.get_user_json_by_id(conn, current_user.get_id())
+
+    return render_template("about.html", data=db.get_page_data(conn), user = user_info)
 
 @app.route("/live")
 def live():
     conn = get_db_connection()
-    return render_template("live.html", data=db.get_page_data(conn), user_id = current_user.get_id())
+    
+    user_info = db.get_user_json_by_id(conn, current_user.get_id())
+
+    return render_template("live.html", data=db.get_page_data(conn), user = user_info)
 
 @app.route("/tos")
 def tos():

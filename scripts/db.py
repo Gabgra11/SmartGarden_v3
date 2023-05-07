@@ -1,5 +1,7 @@
 import datetime as dt
 import pandas as pd
+from scripts import user
+import json
 
 def get_current_date_window():
     # Get the timestamps of the beginning and end of the current day.
@@ -83,5 +85,31 @@ def get_page_data(conn):
         'humidity': humidity,
         'temperature': temperature
     }
-    print(data)
     return data
+
+def add_or_update_user(conn, user_info):
+    command = 'INSERT INTO users (id, name) SELECT ?, ? WHERE NOT EXISTS (SELECT id FROM users WHERE id = ?)'
+    conn.execute(command, (user_info['sub'], user_info['name'], user_info['sub']))
+    conn.commit()
+
+def get_user_by_id(conn, user_id):
+    result = None
+
+    if user_id == None:
+        return result
+    
+    command = 'SELECT id, name FROM users WHERE id == ?'
+    query = conn.execute(command, (user_id,)).fetchone()
+
+    if query:
+        user_info = {'sub': query[0], 'name': query[1]}
+        result = user.User(user_info)
+    
+    return result
+
+def get_user_json_by_id(conn, user_id):
+    user_result = get_user_by_id(conn, user_id)
+    if user_result:
+        return user_result.json()
+    else:
+        return None
