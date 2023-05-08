@@ -22,7 +22,7 @@ def get_data_week_df(conn, date):
     command = 'SELECT timestamp, moisture, humidity, temperature FROM data WHERE timestamp BETWEEN {} AND {}'
     df = pd.read_sql_query(command.format(start_time, end_time), conn)
     return df
-    
+
 def add_user_vote(conn, user_id, vote):
     # Clear previous vote from user, if exists:
     command = 'DELETE FROM votes WHERE user == ?'
