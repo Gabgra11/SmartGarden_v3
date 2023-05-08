@@ -2,7 +2,6 @@
 TODO: Add sensor/motor controls
 TODO: Fill out readme.md setup
 TODO: Implement live stream
-TODO: Config parser (Plant name, google auth info, etc.)
 """
 
 import config
@@ -10,7 +9,7 @@ import os
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request
 from flask_login import LoginManager, login_user, logout_user, current_user
-from scripts import statistics, user, db
+from scripts import barchart, user, db
 
 login_manager = LoginManager()
 app = Flask(__name__)
@@ -43,7 +42,7 @@ def home():
 @app.route("/stats")
 def stats():
     conn = get_db_connection()
-    moistJSON, humidJSON, tempJSON = statistics.get_week_stats_json(conn)
+    moistJSON, humidJSON, tempJSON = barchart.get_week_stats_json(conn)
     user_info = db.get_user_json_by_id(conn, current_user.get_id())
 
     return render_template(
