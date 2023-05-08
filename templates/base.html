@@ -1,5 +1,13 @@
 <!doctype html>
 
+{% set navigation_bar = [
+    ('/vote', 'vote', 'Vote'),
+    ('/about', 'about', 'About'),
+    ('/stats', 'stats', 'Stats'),
+    ('/live', 'live', 'Live')
+] -%}
+{% set active_page = active_page|default('none') -%}
+
 <html lang="en">
     <head>
         {% block head %}
@@ -25,25 +33,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link" href="/vote">Vote</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/stats">Stats</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="/live">Live</a>
-                </li>
+                {% for href, id, caption in navigation_bar %}
+                    <li class="nav-item {% if id == active_page %} active {% endif %}">
+                        <a class="nav-link" href={{ href|e }}>{{ caption|e }}</a>
+                    </li>
+                {% endfor %}
             </ul>
             </div>
-            <!-- <div class="float-right"> -->
                 {% if user %}
                     <span class="navbar-text p-0">Signed in as: {{ user['name'] }}<a class="inline-block btn btn-primary ml-3" href="/logout">Log out</a></span>
                 {% endif %}
-            <!-- </div> -->
         </nav>
         {% endblock %}
 
