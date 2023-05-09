@@ -16,8 +16,8 @@ def make_bar_chart(x, x_label, y, y_label, title):
     
     return graphJSON
 
-def get_week_stats_json(conn):
-    df = db.get_data_week_df(conn, dt.datetime.now() - dt.timedelta(days=7))
+def get_week_stats_json():
+    df = db.get_data_week_df(dt.datetime.now() - dt.timedelta(days=7))
     x = [dt.datetime.fromtimestamp(date).strftime("%a, %b %d") for date in df['timestamp']]
     moist_y = df['moisture'].values.tolist()
     humid_y = df['humidity'].values.tolist()
