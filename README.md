@@ -11,7 +11,7 @@ Smart Garden requires the following hardware:
 * BMP280 module
 * Capacitive Soil Moisture sensor
 * 5V DC Submersible Water Pump + Tubing
-* 5V DC PSU (Obsolete electronics chargers can be useful here.)
+* 5V DC PSU
 
 The Automation Hat allows the Pi to control the water pump via its relay. The analog inputs also allow for capacitive soil moisture readings. 
 
@@ -19,13 +19,7 @@ The Automation Hat allows the Pi to control the water pump via its relay. The an
 
 The Raspberry Pi runs a Python script which collects sensor data and pushes it to the web app. At the specified time, votes are counted. Majority vote determines whether the water pump is triggered. 
 
-Google Authentication is used to securely prevent duplicate votes. This makes voting fair, safe, and accessible. 
-
-## Setup
-
-### Configuring cron
-
-TODO
+Google Authentication is used to securely prevent duplicate votes. This makes voting fair, safe, and accessible.
 
 ## History
 

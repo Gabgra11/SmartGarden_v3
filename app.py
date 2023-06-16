@@ -1,6 +1,5 @@
 """
 TODO: Add sensor/motor controls
-TODO: Fill out readme.md setup
 TODO: Implement live stream
 TODO: DB Caching to reduce reads (?)
 """
