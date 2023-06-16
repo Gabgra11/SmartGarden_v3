@@ -1,11 +1,7 @@
 import psycopg
 import os
 
-with psycopg.connect("host={} port=5432 dbname={}} user={}} password='{}'"
-                     .format(os.environ.get("db_host"), 
-                             os.environ.get("db_name"), 
-                             os.environ.get("db_user"), 
-                             os.environ.get("db_password"))) as connection:
+with psycopg.connect(os.environ.get('db_uri')) as connection:
     with connection.cursor() as cur:
 
         cur.execute(open("schema.sql", "r").read())
