@@ -6,7 +6,7 @@ from psycopg import sql
 import config
 
 def get_db_connection():
-    connect_string = "host=localhost port=5432 dbname={} user={} password={}".format(config.db_name, config.db_user, config.db_password)
+    connect_string = "host={} port=5432 dbname={} user={} password={}".format(config.db_host, config.db_name, config.db_user, config.db_password)
     conn = psycopg.connect(connect_string)
     return conn
 
