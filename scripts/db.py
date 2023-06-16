@@ -1,12 +1,13 @@
 import datetime as dt
 import pandas as pd
 from scripts import user
-import json
-import sqlite3
+import psycopg
+from psycopg import sql
+import config
 
 def get_db_connection():
-    conn = sqlite3.connect('db/database.db')
-    conn.row_factory = sqlite3.Row
+    connect_string = "host=localhost port=5432 dbname={} user={} password={}".format(config.db_name, config.db_user, config.db_password)
+    conn = psycopg.connect(connect_string)
     return conn
 
 def get_current_date_window():
@@ -17,8 +18,10 @@ def get_current_date_window():
 
 def add_data_reading(moisture, humidity, temperature):
     conn = get_db_connection()
-    command = 'INSERT INTO data (timestamp, moisture, humidity, temperature) VALUES (?, ?, ?, ?)'
-    conn.execute(command, (dt.datetime.now().timestamp(), moisture, humidity, temperature))
+    command = 'INSERT INTO data (timestamp, moisture, humidity, temperature) VALUES ({}, {}, {}, {})'
+
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command.format(dt.datetime.now().timestamp(), moisture, humidity, temperature)))
     conn.commit()
     conn.close()
 
@@ -36,12 +39,13 @@ def get_data_week_df(date):
 def add_user_vote(user_id, vote):
     # Clear previous vote from user, if exists:
     conn = get_db_connection()
-    command = 'DELETE FROM votes WHERE user == ?'
-    conn.execute(command, (user_id,))
+    command1 = 'DELETE FROM votes WHERE userid = \'{}\''
 
     # Add new vote from user:
-    command = 'INSERT INTO votes (timestamp, vote, user) VALUES (?, ?, ?)'
-    conn.execute(command, (dt.datetime.now().timestamp(), vote, user_id))
+    command2 = 'INSERT INTO votes (timestamp, vote, userid) VALUES ({}, {}, \'{}\')'
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command1.format(user_id,)))
+        cur.execute(sql.SQL(command2.format(dt.datetime.now().timestamp(), vote, user_id)))
     conn.commit()
     conn.close()
 
@@ -52,8 +56,9 @@ def get_user_vote(user_id):
     conn = get_db_connection()
     midnight, end_of_day = get_current_date_window()
 
-    command = 'SELECT vote FROM votes WHERE user == ? AND timestamp BETWEEN ? AND ?'
-    query = conn.execute(command, (user_id, midnight, end_of_day)).fetchone()
+    command = 'SELECT vote FROM votes WHERE userid = \'{}\' AND timestamp BETWEEN {} AND {}'
+    with conn.cursor() as cur:
+        query = cur.execute(sql.SQL(command.format(user_id, midnight, end_of_day))).fetchone()
     conn.close()
     
     if query:
@@ -66,8 +71,9 @@ def get_page_data():
     midnight, end_of_day = get_current_date_window()
 
     # Get votes:
-    command = 'SELECT vote, COUNT(*) as count FROM votes WHERE timestamp BETWEEN ? AND ? GROUP BY vote'
-    votes_query = conn.execute(command, (midnight, end_of_day)).fetchall()
+    command = 'SELECT vote, COUNT(*) as count FROM votes WHERE timestamp BETWEEN {} AND {} GROUP BY vote'
+    with conn.cursor() as cur:
+        votes_query = cur.execute(sql.SQL(command.format(midnight, end_of_day))).fetchall()
     
     yes_votes = 0
     no_votes = 0
@@ -75,14 +81,17 @@ def get_page_data():
     # Populate vote counts, if they exist:
     if votes_query:
         for row in votes_query:
-            if row['vote'] == 1:
-                yes_votes = row['count']
-            if row['vote'] == -1:
-                no_votes = row['count']
+            # row = (vote number, count)
+            # vote numbers: 1 = yes, -1 = no
+            if row[0] == 1:
+                yes_votes = row[1]
+            if row[0] == -1:
+                no_votes = row[1]
 
     # Get stats:
-    command = 'SELECT moisture, humidity, temperature FROM data WHERE timestamp BETWEEN ? AND ?'
-    stats_query = conn.execute(command, (midnight, end_of_day)).fetchone()
+    command = 'SELECT moisture, humidity, temperature FROM data WHERE timestamp BETWEEN {} AND {} ORDER BY timestamp DESC'
+    with conn.cursor() as cur:
+        stats_query = cur.execute(sql.SQL(command.format(midnight, end_of_day))).fetchone()
 
     if stats_query:
         moisture = stats_query[0]
@@ -106,8 +115,14 @@ def get_page_data():
 def add_or_update_user(user_info):
     # Add user to users table if not in table:
     conn = get_db_connection()
-    command = 'INSERT INTO users (id, name) SELECT ?, ? WHERE NOT EXISTS (SELECT id FROM users WHERE id = ?)'
-    conn.execute(command, (user_info['sub'], user_info['name'], user_info['sub']))
+    command =   'DO $$\
+                BEGIN\
+                IF NOT EXISTS (SELECT * from users WHERE id = \'{}\') THEN\
+                INSERT INTO users (id, name) VALUES (\'{}\', \'{}\');\
+                END IF;\
+                END $$;'
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command.format(user_info['sub'], user_info['sub'], user_info['name'])))
     conn.commit()
     conn.close()
 
@@ -119,8 +134,9 @@ def get_user_by_id(user_id):
     if user_id == None:
         return result
     
-    command = 'SELECT id, name FROM users WHERE id == ?'
-    query = conn.execute(command, (user_id,)).fetchone()
+    command = 'SELECT id, name FROM users WHERE id = \'{}\''
+    with conn.cursor() as cur:
+        query = cur.execute(sql.SQL(command.format(user_id,))).fetchone()
 
     if query:
         user_info = {'sub': query[0], 'name': query[1]}

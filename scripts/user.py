@@ -1,17 +1,18 @@
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from scripts import db
+import config
 
 class User:
-    def __init__(self, user_info, conn=None):
+    def __init__(self, user_info):
+        
         if not user_info == None: # Info dict Passed in:
             self.id = user_info['sub']
             self.name = user_info['name']
             self.is_authenticated = True # We don't create user objects for non-authenticated users
             self.is_active = True # Inactivity not tracked
             self.is_anonymous = False # All users are not anonymous
-            if conn:
-                db.add_or_update_user(conn, user_info)
+            db.add_or_update_user(user_info)
         else: # id == None:
             self.id = None
             self.name = None
@@ -31,10 +32,10 @@ class User:
             'name': self.name
         }
 # https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
-def verify_token(token, client_id):
+def verify_token(token):
     try:
         # Specify the CLIENT_ID of the app that accesses the backend:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), config.client_id)
 
         # Or, if multiple clients access the backend server:
         # idinfo = id_token.verify_oauth2_token(token, requests.Request())

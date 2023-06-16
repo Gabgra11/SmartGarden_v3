@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS votes;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE data (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL NOT NULL PRIMARY KEY,
     timestamp INTEGER NOT NULL,
     moisture REAL,
     humidity REAL,
@@ -11,10 +11,10 @@ CREATE TABLE data (
 );
 
 CREATE TABLE votes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL NOT NULL PRIMARY KEY,
     timestamp INTEGER NOT NULL,
-    vote INTEGER NOT NULL, 
-    user TEXT NOT NULL
+    vote INTEGER NOT NULL,
+    userid TEXT NOT NULL
 );
 
 CREATE TABLE users (
