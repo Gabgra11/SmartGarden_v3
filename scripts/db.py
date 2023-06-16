@@ -6,7 +6,7 @@ from psycopg import sql
 import config
 
 def get_db_connection():
-    conn = psycopg.connect(config.db_uri)
+    conn = psycopg.connect(config.db_url)
     return conn
 
 def get_current_date_window():
