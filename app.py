@@ -5,7 +5,6 @@ TODO: Implement live stream
 TODO: DB Caching to reduce reads (?)
 """
 
-import config
 import os
 from flask import Flask, redirect, url_for, render_template, request
 from flask_login import LoginManager, login_user, logout_user, current_user
@@ -14,6 +13,8 @@ from scripts import barchart, user, db
 login_manager = LoginManager()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('client_secret')
+cid = os.environ.get("client_id")
+uri = os.environ.get("login_uri")
 login_manager.init_app(app)
 
 @login_manager.user_loader
@@ -57,8 +58,8 @@ def vote():
     
     return render_template(
         "vote.html",
-        client_id = config.client_id,
-        login_uri = config.login_uri,
+        client_id = cid,
+        login_uri = uri,
         user = user_info,
         current_vote = current_vote, 
         data=db.get_page_data()
