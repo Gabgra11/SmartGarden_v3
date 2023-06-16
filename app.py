@@ -67,7 +67,7 @@ def vote():
 
 @app.route("/login", methods=["POST"])
 def login():
-    user_info = user.verify_token(request.form['credential'])
+    user_info = user.verify_token(request.form['credential'], cid)
     login_user(user.User(user_info))
     return redirect(url_for("vote"))
 

@@ -1,6 +1,5 @@
 from google.oauth2 import id_token
 from google.auth.transport import requests
-import config
 from scripts import db
 
 class User:
@@ -32,10 +31,10 @@ class User:
             'name': self.name
         }
 # https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
-def verify_token(token):
+def verify_token(token, client_id):
     try:
         # Specify the CLIENT_ID of the app that accesses the backend:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), config.client_id)
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), client_id)
 
         # Or, if multiple clients access the backend server:
         # idinfo = id_token.verify_oauth2_token(token, requests.Request())
