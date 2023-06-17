@@ -1,4 +1,5 @@
 import datetime as dt
+import pytz
 import pandas as pd
 from scripts import user
 import psycopg
@@ -10,9 +11,17 @@ def get_db_connection():
     return conn
 
 def get_current_date_window():
-    # Get the timestamps of the beginning and end of the current day.
-    midnight = dt.datetime.combine(dt.date.today(), dt.datetime.min.time()).timestamp()
-    end_of_day = dt.datetime.combine(dt.date.today(), dt.datetime.max.time()).timestamp()
+    # Get the timestamps of the beginning and end of the current day in Central Time Zone.
+
+    central_tz = pytz.timezone('US/Central')
+    current_date = dt.datetime.now(central_tz).date()
+
+    midnight_dt = central_tz.localize(dt.datetime.combine(current_date, dt.datetime.min.time()))
+    midnight = int(midnight_dt.timestamp())
+
+    end_of_day_dt = central_tz.localize(dt.datetime.combine(current_date, dt.datetime.max.time()))
+    end_of_day = int(end_of_day_dt.timestamp())
+
     return midnight, end_of_day
 
 def add_data_reading(moisture, humidity, temperature):
@@ -150,12 +159,3 @@ def get_user_json_by_id(user_id):
         return user_result.json()
     else:
         return None
-    
-def clear_all_votes():
-    conn = get_db_connection()
-    command = 'DELETE FROM votes'
-
-    with conn.cursor() as cur:
-        cur.execute(sql.SQL(command))
-    conn.commit()
-    conn.close()
