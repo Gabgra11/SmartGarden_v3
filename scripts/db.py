@@ -39,7 +39,7 @@ def get_data_week_df(date):
 
     start_time = date.timestamp()
     end_time = date_plus_7.timestamp()
-    command = 'SELECT timestamp, moisture, humidity, temperature FROM data WHERE timestamp BETWEEN {} AND {}'
+    command = 'SELECT timestamp, moisture, humidity, temperature FROM data WHERE timestamp BETWEEN {} AND {} ORDER BY timestamp ASC'
     df = pd.read_sql_query(command.format(start_time, end_time), conn)
     conn.close()
     return df
