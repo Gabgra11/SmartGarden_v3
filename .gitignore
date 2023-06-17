@@ -3,4 +3,4 @@ __pycache__/*
 */__pycache__/*
 *.ini
 /venv/
-/scripts/demo.py
+demo.py

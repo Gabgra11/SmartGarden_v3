@@ -44,6 +44,18 @@ def get_data_week_df(date):
     conn.close()
     return df
 
+def get_waterings_week(date):
+    conn = get_db_connection()
+    date_plus_7 = date + dt.timedelta(days=7)
+
+    start_time = date.timestamp()
+    end_time = date_plus_7.timestamp()
+    command = 'SELECT timestamp FROM waterings WHERE timestamp BETWEEN {} and {} ORDER BY timestamp ASC'
+    with conn.cursor() as cur:
+        query = cur.execute(sql.SQL(command.format(start_time, end_time))).fetchall()
+    conn.close()
+    return query
+
 def add_user_vote(user_id, vote):
     # Clear previous vote from user, if exists:
     conn = get_db_connection()
