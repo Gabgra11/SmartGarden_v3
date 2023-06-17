@@ -2,6 +2,8 @@
 TODO: Add sensor/motor controls
 TODO: Implement live stream
 TODO: DB Caching to reduce reads (?)
+TODO: Fix vote page login button layout
+TODO: Standardize timezone for midnight calculations
 """
 
 from flask import Flask, redirect, url_for, render_template, request

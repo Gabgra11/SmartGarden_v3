@@ -150,3 +150,12 @@ def get_user_json_by_id(user_id):
         return user_result.json()
     else:
         return None
+    
+def clear_all_votes():
+    conn = get_db_connection()
+    command = 'DELETE FROM votes'
+
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command))
+    conn.commit()
+    conn.close()
