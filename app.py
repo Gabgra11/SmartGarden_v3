@@ -1,5 +1,4 @@
 """
-TODO: Fix vote page login button layout
 TODO: Add sensor/motor controls
 TODO: Implement live stream
 TODO: DB Caching to reduce reads (?)

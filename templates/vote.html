@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% set active_page = 'vote' %}
 
+{% if current_vote == -1 %}
+{% set bg_color = 'LightCoral' %}
+{% elif current_vote == 1 %}
+{% set bg_color = 'LightGreen' %}
+{% else %}
+{% set bg_color = 'LightGray' %}
+{% endif %}
+
 {% block head %}
     {{ super() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -10,46 +18,54 @@
 
 {% block content %}
     {% if user == None %}
-    <div id="g_id_onload"
-        data-client_id="{{ client_id }}"
-        data-login_uri="{{ login_uri }}"
-        data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left">
+    <div class="container d-flex justify-content-center">
+        <div class="card m-auto">
+            <div class="card-header">Sign in to vote</div>
+            <div class="container p-5 d-flex justify-content-center">
+                <div id="g_id_onload"
+                    data-client_id="{{ client_id }}"
+                    data-login_uri="{{ login_uri }}"
+                    data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-size="large"
+                    data-theme="outline"
+                    data-text="sign_in_with"
+                    data-shape="rectangular"
+                    data-logo_alignment="left">
+                </div>
+            </div>
+        </div>
     </div>
     {% else %}
-    <div class="card w-25 m-auto">
-        <div class="card-header">Vote</div>
-        <div class="card-body">
-            <p>{{ user['name'] }},</p>
-            <p>Should Seymore be watered today?</p>
-            <form method="POST">
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioYes" value=1
-                    {% if current_vote == 1 %}
-                        checked
-                    {% endif %}
-                    >
-                    <label class="form-check-label" for="voteForm">Yes</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioNo" value=-1
-                    {% if current_vote == -1 %}
-                        checked
-                    {% endif %}
-                    >
-                    <label class="form-check-label" for="voteForm">No</label>
-                </div> <br><br>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <a href="/logout">Log out</a>
+    <div class="container d-flex justify-center">
+        <div class="card m-auto" style="background-color:{{bg_color}}">
+            <div class="card-header">Vote</div>
+            <div class="card-body">
+                <p>{{ user['name'] }},</p>
+                <p>Should Seymore be watered today?</p>
+                <form method="POST">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioYes" value=1
+                        {% if current_vote == 1 %}
+                            checked
+                        {% endif %}
+                        >
+                        <label class="form-check-label" for="voteForm">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="voteRadioOptions" id="inlineRadioNo" value=-1
+                        {% if current_vote == -1 %}
+                            checked
+                        {% endif %}
+                        >
+                        <label class="form-check-label" for="voteForm">No</label>
+                    </div> <br><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
     {% endif %}
