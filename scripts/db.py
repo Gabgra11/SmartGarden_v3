@@ -171,3 +171,13 @@ def get_user_json_by_id(user_id):
         return user_result.json()
     else:
         return None
+    
+def add_water_record():
+    conn = get_db_connection()
+    timestamp = dt.datetime.now().timestamp()
+    command = 'INSERT INTO waterings (timestamp) VALUES ({})'
+    
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command.format(timestamp)))
+    conn.commit()
+    conn.close()
