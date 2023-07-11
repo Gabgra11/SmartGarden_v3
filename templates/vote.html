@@ -18,7 +18,7 @@
 
 {% block content %}
     {% if user == None %}
-    <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center py-5">
         <div class="card m-auto">
             <div class="card-header">Sign in to vote</div>
             <div class="container p-5 d-flex justify-content-center">
@@ -39,7 +39,7 @@
         </div>
     </div>
     {% else %}
-    <div class="container d-flex justify-center">
+    <div class="container d-flex justify-center py-5">
         <div class="card m-auto" style="background-color:{{bg_color}}">
             <div class="card-header">Vote</div>
             <div class="card-body">
