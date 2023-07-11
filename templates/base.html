@@ -33,23 +33,25 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav w-100">
                 {% for href, id, caption in navigation_bar %}
                     <li class="nav-item {% if id == active_page %} active {% endif %}">
                         <a class="nav-link" href={{ href|e }}>{{ caption|e }}</a>
                     </li>
                 {% endfor %}
+                {% if user %}
+                    <div class="mx-auto container d-flex justify-content-end">
+                        <span class="navbar-text p-0">Signed in as: {{ user['name'] }}<a class="inline-block btn btn-primary ml-3" href="/logout">Log out</a></span>
+                    </div>
+                {% endif %} 
             </ul>
             </div>
-                {% if user %}
-                    <span class="navbar-text p-0">Signed in as: {{ user['name'] }}<a class="inline-block btn btn-primary ml-3" href="/logout">Log out</a></span>
-                {% endif %}
         </nav>
         {% endblock %}
 
         {% block stats %}
-        <div class="container pt-3">
-            <div class="row" id="dataRow">
+        <div class="container">
+            <div class="row pt-3" id="dataRow">
                 <div class="col-sm data">
                     <h4>Votes</h4>
                     <table class="table table-sm table-bordered table-striped">
