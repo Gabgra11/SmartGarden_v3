@@ -9,7 +9,7 @@ from scripts import barchart, user, db
 import config
 
 login_manager = LoginManager()
-app = Flask(__name__)
+application = app = Flask(__name__)
 app.config['SECRET_KEY'] = config.client_secret
 login_manager.init_app(app)
 
