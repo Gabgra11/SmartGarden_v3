@@ -7,3 +7,4 @@ demo.py
 *.bat
 .ebignore
 .platform
+/captured_images/

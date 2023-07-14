@@ -181,3 +181,27 @@ def add_water_record():
         cur.execute(sql.SQL(command.format(timestamp)))
     conn.commit()
     conn.close()
+
+def add_image_id(id):
+    conn = get_db_connection()
+    timestamp = dt.datetime.now().timestamp()
+    command = 'INSERT INTO images (timestamp, id) VALUES ({}, \'{}\')'
+    
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command.format(timestamp, id)))
+    conn.commit()
+    conn.close()
+
+def get_recent_image_id():
+    conn = get_db_connection()
+    command = "SELECT id FROM images ORDER BY timestamp DESC LIMIT 1"
+
+    with conn.cursor() as cur:
+        query = cur.execute(sql.SQL(command)).fetchone()
+    conn.close()
+
+    if query:
+        return query[0]
+    else:
+        print("Failed to get recent id")
+        return None

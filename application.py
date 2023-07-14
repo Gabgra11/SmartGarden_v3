@@ -1,6 +1,5 @@
 """
 TODO: Add sensor/motor controls
-TODO: Implement live stream
 TODO: DB Caching to reduce reads (?)
 """
 
@@ -90,7 +89,8 @@ def live():
     return render_template(
         "live.html",
         data=db.get_page_data(),
-        user = user_info
+        user = user_info,
+        image_id=db.get_recent_image_id()
     )
 
 @app.route("/tos")

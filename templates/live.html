@@ -2,12 +2,14 @@
 {% set active_page = 'live' %}
 
 {% block content %}
-    <div class="container">
-        <div class="card">
-            <div class="card-header">Live Garden Cam</div>
-            <div class="card-body">
-                
-            </div>
+<div class="container">
+    <div class="card">
+        <div class="card-header">Live Garden Cam</div>
+        <div class="card-body mx-auto">
+            <blockquote class="imgur-embed-pub" lang="en" data-id="{{ image_id }}" data-context="false"><a
+                    href="//imgur.com/{{ image_id }}"></a></blockquote>
+            <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
         </div>
     </div>
+</div>
 {% endblock %}
