@@ -6,9 +6,13 @@ import psycopg
 from psycopg import sql
 import config
 
+# Return connection or None if connection failed:
 def get_db_connection():
-    conn = psycopg.connect(config.db_url)
-    return conn
+    try:
+        conn = psycopg.connect(config.db_url)
+        return conn
+    except:
+        return None
 
 def get_current_date_window():
     # Get the timestamps of the beginning and end of the current day in Central Time Zone.
@@ -26,15 +30,25 @@ def get_current_date_window():
 
 def add_data_reading(moisture, humidity, temperature):
     conn = get_db_connection()
+    if not conn:
+        print("Error in add_data_reading. get_db_connection failed.")
+        return False
+    
     command = 'INSERT INTO data (timestamp, moisture, humidity, temperature) VALUES ({}, {}, {}, {})'
 
     with conn.cursor() as cur:
         cur.execute(sql.SQL(command.format(dt.datetime.now().timestamp(), moisture, humidity, temperature)))
     conn.commit()
     conn.close()
+    return True
 
 def get_data_week_df(date):
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_data_week_df. get_db_connection failed.")
+        return None
+    
     date_plus_7 = date + dt.timedelta(days=7)
 
     start_time = date.timestamp()
@@ -46,6 +60,11 @@ def get_data_week_df(date):
 
 def get_waterings_week(date):
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_waterings_week. get_db_connection failed.")
+        return None
+    
     date_plus_7 = date + dt.timedelta(days=7)
 
     start_time = date.timestamp()
@@ -59,6 +78,11 @@ def get_waterings_week(date):
 def add_user_vote(user_id, vote):
     # Clear previous vote from user, if exists:
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in add_user_vote. get_db_connection failed.")
+        return False
+
     command1 = 'DELETE FROM votes WHERE userid = \'{}\''
 
     # Add new vote from user:
@@ -68,12 +92,18 @@ def add_user_vote(user_id, vote):
         cur.execute(sql.SQL(command2.format(dt.datetime.now().timestamp(), vote, user_id)))
     conn.commit()
     conn.close()
+    return True
 
 def get_user_vote(user_id):
     if user_id == None:
         return None
     
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_user_vote. get_db_connection failed.")
+        return None
+
     midnight, end_of_day = get_current_date_window()
 
     command = 'SELECT vote FROM votes WHERE userid = \'{}\' AND timestamp BETWEEN {} AND {}'
@@ -86,15 +116,21 @@ def get_user_vote(user_id):
     else: 
         return None
 
-def get_page_data():
+# Returns vote counts as (yes_votes, no_votes):
+def get_vote_counts():
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_vote_counts. get_db_connection failed.")
+        return None, None
+
     midnight, end_of_day = get_current_date_window()
 
-    # Get votes:
     command = 'SELECT vote, COUNT(*) as count FROM votes WHERE timestamp BETWEEN {} AND {} GROUP BY vote'
     with conn.cursor() as cur:
         votes_query = cur.execute(sql.SQL(command.format(midnight, end_of_day))).fetchall()
-    
+    conn.close()
+
     yes_votes = 0
     no_votes = 0
 
@@ -107,8 +143,18 @@ def get_page_data():
                 yes_votes = row[1]
             if row[0] == -1:
                 no_votes = row[1]
+    return yes_votes, no_votes
 
-    # Get stats:
+# Returns stats as (moisture, humidity, temperature):
+def get_stats():
+    conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_stats. get_db_connection failed.")
+        return None, None, None
+
+    midnight, end_of_day = get_current_date_window()
+    
     command = 'SELECT moisture, humidity, temperature FROM data WHERE timestamp BETWEEN {} AND {} ORDER BY timestamp DESC'
     with conn.cursor() as cur:
         stats_query = cur.execute(sql.SQL(command.format(midnight, end_of_day))).fetchone()
@@ -121,6 +167,16 @@ def get_page_data():
         moisture = None
         humidity = None
         temperature = None
+
+    conn.close()
+    return moisture, humidity, temperature
+
+def get_page_data():
+    # Get votes:
+    yes_votes, no_votes = get_vote_counts()
+
+    # Get stats:
+    moisture, humidity, temperature = get_stats()
         
     data = {
         'yes_votes': yes_votes, 
@@ -129,12 +185,16 @@ def get_page_data():
         'humidity': humidity,
         'temperature': temperature
     }
-    conn.close()
     return data
 
 def add_or_update_user(user_info):
     # Add user to users table if not in table:
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in add_or_update_user. get_db_connection failed.")
+        return False
+
     command =   'DO $$\
                 BEGIN\
                 IF NOT EXISTS (SELECT * from users WHERE id = \'{}\') THEN\
@@ -145,10 +205,16 @@ def add_or_update_user(user_info):
         cur.execute(sql.SQL(command.format(user_info['sub'], user_info['sub'], user_info['name'])))
     conn.commit()
     conn.close()
+    return True
 
 def get_user_by_id(user_id):
     # Get user from users table, if exists:
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_user_by_id. get_db_connection failed.")
+        return None
+
     result = None
 
     if user_id == None:
@@ -174,6 +240,11 @@ def get_user_json_by_id(user_id):
     
 def add_water_record():
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in add_water_record. get_db_connection failed.")
+        return False
+
     timestamp = dt.datetime.now().timestamp()
     command = 'INSERT INTO waterings (timestamp) VALUES ({})'
     
@@ -181,9 +252,15 @@ def add_water_record():
         cur.execute(sql.SQL(command.format(timestamp)))
     conn.commit()
     conn.close()
+    return True
 
 def add_image_id(id):
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in add_image_id. get_db_connection failed.")
+        return False
+
     timestamp = dt.datetime.now().timestamp()
     command = 'INSERT INTO images (timestamp, id) VALUES ({}, \'{}\')'
     
@@ -191,9 +268,15 @@ def add_image_id(id):
         cur.execute(sql.SQL(command.format(timestamp, id)))
     conn.commit()
     conn.close()
+    return True
 
 def get_recent_image_id():
     conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_recent_image_id. get_db_connection failed.")
+        return None
+
     command = "SELECT id FROM images ORDER BY timestamp DESC LIMIT 1"
 
     with conn.cursor() as cur:

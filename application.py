@@ -1,6 +1,6 @@
 """
 TODO: Add sensor/motor controls
-TODO: DB Caching to reduce reads (?)
+TODO: Add internet outage backup watering schedule
 """
 
 from flask import Flask, redirect, url_for, render_template, request
