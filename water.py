@@ -1,16 +1,26 @@
 import time
-import db
+from scripts import db
 import os
+from datetime import datetime
 
-duration = os.environ.get('water_duration')
+# Get water duration in seconds, or default to 5 seconds:
+duration = os.getenv('water_duration', 5)
+
+# Get backup watering schedule in days, or default to every 3 days:
+backup_water_interval = os.getenv('backup_water_interval', 3)
 
 def water(duration):
     yes_votes, no_votes = db.get_vote_counts()
 
     if yes_votes == None or no_votes == None:   # DB Connection failure.
+        # Use backup watering schedule (Water every <backup_water_interval> days):
         print("DB Connection failed. Using backup watering schedule.")
-        # TODO: create backup watering schedule rule. Replace next line
-        should_water = False
+        day_int = int(datetime.now().weekday())
+        if day_int % backup_water_interval == 0:
+            should_water = True
+        else:
+            should_water = False
+
     else:   # Collected votes successfully
         if yes_votes > no_votes:
             should_water = True
@@ -18,6 +28,7 @@ def water(duration):
             should_water = False
     
     if should_water:
+        print("Watering the plant")
         # TODO: Turn on water pump relay
         # Sleep for <duration> seconds
         time.sleep(duration)
