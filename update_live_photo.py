@@ -1,15 +1,16 @@
 import os
 import requests
-import cv2
 from datetime import datetime
 from scripts import db
+import imageio as iio
 import time
 
 def capture_image():
-    camera = cv2.VideoCapture(0)
-    _, frame = camera.read()
-    camera.release()
-    return frame
+    # Capture image from the webcam
+    camera = iio.get_reader("<video0>")
+    image = camera.get_data(0)
+    camera.close()
+    return image
 
 def save_image(image):
     # Create images folder if not present:
@@ -18,7 +19,7 @@ def save_image(image):
     now = datetime.now()
     filename = f"webcam_{now.strftime('%Y%m%d_%H%M%S')}.jpg"
     file_path = os.path.join(image_folder, filename)
-    cv2.imwrite(file_path, image)
+    iio.imwrite(file_path, image)
     return file_path
 
 def upload_to_imgur(image_path):
