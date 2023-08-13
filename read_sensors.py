@@ -3,6 +3,12 @@ import automationhat
 import smbus2
 import bme280
 
+def analog_reading_to_percent(val):
+    dry = 2.428
+    wet = 0.924
+
+    return (val-dry)/(wet-dry)*(100)
+
 def read_and_update_stats():
     # TODO: Get sensor readings:
     port = 1
@@ -10,8 +16,8 @@ def read_and_update_stats():
     bus = smbus2.SMBus(port)
     calibration_params = bme280.load_calibration_params(bus, address)
     data = bme280.sample(bus, address, calibration_params)
-    moisture = automationhat.analog.one.read()
-    # TODO: Map analog reading to moisture %
+    moisture_reading = automationhat.analog.one.read()
+    moisture = analog_reading_to_percent(moisture_reading)
     temperature = (data.temperature * (9/5)) + 32
     humidity = data.humidity
     print("Temperature (F): ", temperature)
