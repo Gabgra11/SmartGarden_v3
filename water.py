@@ -2,6 +2,7 @@ import time
 from scripts import db
 import os
 from datetime import datetime
+import automationhat
 
 # Get water duration in seconds, or default to 5 seconds:
 duration = os.getenv('water_duration', 5)
@@ -29,10 +30,10 @@ def water(duration):
     
     if should_water:
         print("Watering the plant")
-        # TODO: Turn on water pump relay
+        automationhat.relay.one.on()
         # Sleep for <duration> seconds
         time.sleep(duration)
-        # TODO: Turn off water pump relay
+        automationhat.relay.one.off()
         db.add_water_record()
 
 if __name__ == "__main__":

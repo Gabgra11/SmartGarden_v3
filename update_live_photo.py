@@ -1,7 +1,7 @@
 import os
 import requests
 from datetime import datetime
-from scripts import db
+from scripts.db import add_image_id
 import imageio as iio
 import time
 
@@ -54,4 +54,4 @@ if __name__ == "__main__":
         print("Failed to upload image to Imgur.")
     
     # Upload Imgur ID to db:
-    db.add_image_id(imgur_id)
+    add_image_id(imgur_id)
