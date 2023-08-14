@@ -9,6 +9,9 @@ def analog_reading_to_percent(val):
 
     return (val-dry)/(wet-dry)*(100)
 
+def truncate(val, decimals):
+    return int(val * (10**decimals))/(10**decimals)
+
 def read_and_update_stats():
     # TODO: Get sensor readings:
     port = 1
@@ -20,6 +23,10 @@ def read_and_update_stats():
     moisture = analog_reading_to_percent(moisture_reading)
     temperature = (data.temperature * (9/5)) + 32
     humidity = data.humidity
+
+    moisture = truncate(moisture, 1)
+    temperature = truncate(temperature, 1)
+    humidity = truncate(humidity, 1)
     print("Temperature (F): ", temperature)
     print("Moisture: ", moisture)
     print("Humidity: ", humidity)
