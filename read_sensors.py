@@ -7,7 +7,17 @@ def analog_reading_to_percent(val):
     dry = 2.428
     wet = 0.924
 
-    return (val-dry)/(wet-dry)*(100)
+    result = (val-dry)/(wet-dry)*(100)
+
+    if result > 100.0:
+        print("Result greater than 100: ", result)
+        result = 100.0
+
+    if result < 0:
+        print("Result less than 0: ", result)
+        result = 0
+
+    return result
 
 def truncate(val, decimals):
     return int(val * (10**decimals))/(10**decimals)
