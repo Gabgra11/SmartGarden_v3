@@ -5,7 +5,7 @@ TODO: Add internet outage backup watering schedule
 
 from flask import Flask, redirect, url_for, render_template, request
 from flask_login import LoginManager, login_user, logout_user, current_user
-from scripts import barchart, user, db
+from scripts import chart, user, db
 import config
 
 login_manager = LoginManager()
@@ -29,7 +29,7 @@ def home():
 
 @app.route("/stats")
 def stats():
-    moistJSON, humidJSON, tempJSON = barchart.get_week_stats_json()
+    moistJSON, humidJSON, tempJSON = chart.get_week_stats_json()
     user_info = db.get_user_json_by_id(current_user.get_id())
 
     return render_template(
