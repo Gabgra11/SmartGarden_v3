@@ -4,8 +4,8 @@ import smbus2
 import bme280
 
 def analog_reading_to_percent(val):
-    dry = 2.428
-    wet = 0.924
+    dry = 2.5
+    wet = 0.8
 
     result = (val-dry)/(wet-dry)*(100)
 
