@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% set active_page = 'none' %}
+
+{% block nav %}
+{% endblock %}
+
+{% block stats %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST">
+        <label class="form-label" for="title">Title</label>
+        <input name="title" type="text" class="form-control" id="title" aria-describedby="title" placeholder="Title">
+        <br>
+        <label class="form-label" for="body">Body</label>
+        <textarea name="body" class="form-control" id="body" rows="4" placeholder="Body"></textarea>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

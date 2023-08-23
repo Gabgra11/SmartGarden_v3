@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS votes;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS waterings;
 DROP TABLE IF EXISTS images;
+DROP TABLE IF EXISTS notes;
 
 CREATE TABLE data (
     id SERIAL NOT NULL PRIMARY KEY,
@@ -31,4 +32,10 @@ CREATE TABLE waterings (
 CREATE TABLE images (
     timestamp INTEGER NOT NULL PRIMARY KEY,
     id TEXT
+);
+
+CREATE TABLE updates (
+    timestamp INTEGER NOT NULL PRIMARY KEY,
+    title TEXT,
+    body TEXT
 );

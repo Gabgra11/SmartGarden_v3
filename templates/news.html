@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set active_page = 'news' %}
+
+{% block head %}
+{{ super() }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock %}
+
+{% block stats %}
+{% endblock %}
+
+{% block content %}
+
+<body>
+    {% if notes %}
+        {% for note in notes %}
+            <div class="container py-3">
+                <article style="border-bottom-style: dotted; border-color: lightgray;">
+                    <h3>{{ note[1] }}</h3>
+                    <p style="color:gray">{{ note[0] }}</p>
+                    <p>{{ note[2] }}</p>
+                </article>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="container text-center py-5">
+            <h3>No news is good news!</h3>
+        </div>
+
+    {% endif %}
+</body>
+
+{% endblock %}

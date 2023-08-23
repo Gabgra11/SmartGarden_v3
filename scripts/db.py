@@ -288,3 +288,39 @@ def get_recent_image_id():
     else:
         print("Failed to get recent id")
         return None
+    
+def get_notes():
+    conn = get_db_connection()
+
+    if not conn:
+        print("Error in get_notes. get_db_connection failed.")
+        return None
+    
+    command = "SELECT timestamp, title, body FROM updates ORDER BY timestamp DESC"
+
+    with conn.cursor() as cur:
+        query = cur.execute(sql.SQL(command)).fetchall()
+    conn.close()
+
+    if query:
+        return query
+    else:
+        print("No update notes returned from db")
+        return None
+    
+def add_news_note(title, body):
+    conn = get_db_connection()
+
+    if not conn:
+        print("Error in add_news_note. get_db_connection failed.")
+        return False
+    
+    timestamp = dt.datetime.now().timestamp()
+    
+    command = "INSERT INTO updates (timestamp, title, body) VALUES ({}, \'{}\', \'{}\')"
+
+    with conn.cursor() as cur:
+        cur.execute(sql.SQL(command.format(timestamp, title, body)))
+    conn.commit()
+    conn.close()
+    return True
