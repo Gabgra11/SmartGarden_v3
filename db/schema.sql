@@ -37,5 +37,6 @@ CREATE TABLE images (
 CREATE TABLE updates (
     timestamp INTEGER NOT NULL PRIMARY KEY,
     title TEXT,
-    body TEXT
+    body TEXT,
+    date TEXT
 );

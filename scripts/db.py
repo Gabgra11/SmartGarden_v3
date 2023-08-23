@@ -296,7 +296,7 @@ def get_notes():
         print("Error in get_notes. get_db_connection failed.")
         return None
     
-    command = "SELECT timestamp, title, body FROM updates ORDER BY timestamp DESC"
+    command = "SELECT timestamp, title, body, date FROM updates ORDER BY timestamp DESC"
 
     with conn.cursor() as cur:
         query = cur.execute(sql.SQL(command)).fetchall()
@@ -316,11 +316,12 @@ def add_news_note(title, body):
         return False
     
     timestamp = dt.datetime.now().timestamp()
+    date = dt.datetime.fromtimestamp(timestamp).strftime("%d %B, %Y")
     
-    command = "INSERT INTO updates (timestamp, title, body) VALUES ({}, \'{}\', \'{}\')"
+    command = "INSERT INTO updates (timestamp, title, body, date) VALUES ({}, %s, %s, %s)"
 
     with conn.cursor() as cur:
-        cur.execute(sql.SQL(command.format(timestamp, title, body)))
+        cur.execute(command.format(timestamp), (title, body, date))
     conn.commit()
     conn.close()
     return True
