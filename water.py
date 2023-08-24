@@ -4,8 +4,8 @@ import os
 from datetime import datetime
 import automationhat
 
-# Get water duration in seconds, or default to 5 seconds:
-duration = os.getenv('water_duration', 2)
+# Get water duration in seconds, or default to 1.5 seconds:
+duration = os.getenv('water_duration', 1.5)
 
 # Get backup watering schedule in days, or default to every 3 days:
 backup_water_interval = os.getenv('backup_water_interval', 3)
