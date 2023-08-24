@@ -11,6 +11,7 @@ def make_chart(x, x_label, y, y_label, title, waterings_x=None):
     # Create plot
     fig = px.line(df, x=x_label, y=y_label, title=title)
     for i in waterings_x:
+        print(i)
         fig.add_vline(x=i, line_width=3, line_dash="dash", line_color="blue")
     fig.update_yaxes(range=[0, 100])
 
@@ -34,7 +35,10 @@ def get_week_stats_json():
     for i in water_query:
         waterings.append(i[0])
 
-    waterings_x = [dt.datetime.fromtimestamp(date).strftime("%a, %b %d") for date in waterings]
+    waterings_df = pd.DataFrame(waterings).astype('str')
+    waterings_x = pd.to_datetime(waterings_df[0], unit='s')
+
+    print(waterings_x)
 
     moistJSON = make_chart(x, 'Day', moist_y, 'Moisture (%)', '7-Day Moisture History', waterings_x)
     humidJSON = make_chart(x, 'Day', humid_y, 'Humidity (%)', '7-Day Humidity History', waterings_x)

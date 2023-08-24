@@ -1,8 +1,3 @@
-"""
-TODO: Add sensor/motor controls
-TODO: Add internet outage backup watering schedule
-"""
-
 from flask import Flask, redirect, url_for, render_template, request
 from flask_login import LoginManager, login_user, logout_user, current_user
 from scripts import chart, user, db
@@ -91,6 +86,17 @@ def live():
         data=db.get_page_data(),
         user = user_info,
         image_id=db.get_recent_image_id()
+    )
+
+@app.route("/news")
+def news():
+    user_info = db.get_user_json_by_id(current_user.get_id())
+
+    return render_template(
+        "news.html",
+        data=db.get_page_data(),
+        user = user_info,
+        notes = db.get_notes()
     )
 
 @app.route("/tos")
