@@ -7,9 +7,10 @@ Smart Garden v3 allows users to collectively care for a single house plant. Live
 Smart Garden requires the following hardware:
 
 * Raspberry Pi (Any model with wifi or a wifi dongle) + PSU
-* Pimoroni Automation pHat Mini
-* BMP280 module
+* Pimoroni Automation HAT Mini
+* BME280 module
 * Capacitive Soil Moisture sensor
+* USB Web Cam
 * 5V DC Submersible Water Pump + Tubing
 * 5V DC PSU
 
@@ -21,6 +22,43 @@ The Raspberry Pi runs a Python script which collects sensor data and pushes it t
 
 Google Authentication is used to securely prevent duplicate votes. This makes voting fair, safe, and accessible.
 
+A PostgreSQL database is required for storing votes, sensor data, and other relevant data. An easy way to host the web app and PostgreSQL server is AWS Elastic Beanstalk.
+
+## Setup
+
+Clone the repository onto the Raspberry Pi and set the following environment variables:
+
+```
+client_id=[Google Cloud Platform Client ID]
+client_secret="[Google Cloud Platform Client Secret (with quotes)]"
+db_url=[Database Connection URL]
+login_uri=/login
+IMGUR_CLIENT_ID=[Imgur API Client ID (If using webcam)]
+IMGUR_CLIENT_SECRET=[Imgur API Client Secret (If using webcam)]
+```
+
+Install the necessary requirements with:
+
+```
+pip install -r requirements.txt
+```
+
+Configure the crontab according to this example:
+
+```
+client_id=[Google Cloud Platform Client ID]
+client_secret="[Google Cloud Platform Client Secret (with quotes)]"
+db_url=[Database Connection URL]
+login_uri=/login
+IMGUR_CLIENT_ID=[Imgur API Client ID (If using webcam)]
+IMGUR_CLIENT_SECRET=[Imgur API Client Secret (If using webcam)]
+
+0 0 * * * python ~/SmartGarden_v3/water.py
+0 13 * * * python ~/SmartGarden_v3/update_live_photo.py
+*/15 * * * * python ~/SmartGarden_v3/read_sensors.py
+```
+
+The example above counts votes and waters at midnight, updates the live photo at 1 pm, and reads the sensors every 15 minutes.
 ## History
 
 ### Smart Garden v1 (2018-2020)
