@@ -1,3 +1,4 @@
+from datetime import timedelta
 import datetime as dt
 import pytz
 import pandas as pd
@@ -14,11 +15,14 @@ def get_db_connection():
     except:
         return None
 
-def get_current_date_window():
+def get_current_date_window(offset=0):
     # Get the timestamps of the beginning and end of the current day in Central Time Zone.
 
     central_tz = pytz.timezone('US/Central')
-    current_date = dt.datetime.now(central_tz).date()
+    current_date = dt.datetime.now(central_tz)
+    current_date = current_date + timedelta(days=offset) # Add day offset (default=0)
+    current_date = current_date.date()
+
 
     midnight_dt = central_tz.localize(dt.datetime.combine(current_date, dt.datetime.min.time()))
     midnight = int(midnight_dt.timestamp())
@@ -124,7 +128,7 @@ def get_vote_counts():
         print("Error in get_vote_counts. get_db_connection failed.")
         return None, None
 
-    midnight, end_of_day = get_current_date_window()
+    midnight, end_of_day = get_current_date_window(-1) # -1 is the day offset. Need yesterday's range.
 
     command = 'SELECT vote, COUNT(*) as count FROM votes WHERE timestamp BETWEEN {} AND {} GROUP BY vote'
     with conn.cursor() as cur:
@@ -288,14 +292,14 @@ def get_recent_image_id():
     else:
         print("Failed to get recent id")
         return None
-    
+
 def get_notes():
     conn = get_db_connection()
 
     if not conn:
         print("Error in get_notes. get_db_connection failed.")
         return None
-    
+
     command = "SELECT timestamp, title, body, date FROM updates ORDER BY timestamp DESC"
 
     with conn.cursor() as cur:
@@ -307,17 +311,17 @@ def get_notes():
     else:
         print("No update notes returned from db")
         return None
-    
+
 def add_news_note(title, body):
     conn = get_db_connection()
 
     if not conn:
         print("Error in add_news_note. get_db_connection failed.")
         return False
-    
+
     timestamp = dt.datetime.now().timestamp()
     date = dt.datetime.fromtimestamp(timestamp).strftime("%d %B, %Y")
-    
+
     command = "INSERT INTO updates (timestamp, title, body, date) VALUES ({}, %s, %s, %s)"
 
     with conn.cursor() as cur:
