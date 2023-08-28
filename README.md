@@ -1,3 +1,5 @@
+# [🪴 www.Vote2Grow.com 🪴](www.Vote2Grow.com)
+
 # Smart Garden v3
 
 Smart Garden v3 allows users to collectively care for a single house plant. Live moisture, humidity, and temperature data can be used to decide whether the plant should be watered today. Historical trends can be used to track watering patterns and influence future decisions.
