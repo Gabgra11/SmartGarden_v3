@@ -9,3 +9,5 @@ demo.py
 .ebignore
 .platform
 /captured_images/
+water_test.py
+analog_sensor_test.py
