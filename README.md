@@ -1,4 +1,4 @@
-# [🪴 www.Vote2Grow.com 🪴](www.Vote2Grow.com)
+# [🪴 www.Vote2Grow.com 🪴](https://www.Vote2Grow.com)
 
 # Smart Garden v3
 
