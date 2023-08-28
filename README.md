@@ -28,6 +28,22 @@ A PostgreSQL database is required for storing votes, sensor data, and other rele
 
 ## Setup
 
+### Hardware
+
+1. Wire up the sensors as follows:
+    - Capacitive Sensor Output to A1 on the Pi HAT
+    - Capacitive Sensor 5v and Ground to 5v and Ground on the Pi Hat
+    - Water Pump PSU Ground to Ground on the Pi HAT
+    - Water Pump PSU 5v to COM on the Pi HAT Relay
+    - Water Pump 5v Input to NO on the Pi HAT Relay
+    - BME280 to I2C on the Pi HAT
+2. Connect the Pi Hat to the Raspberry Pi Zero W
+3. Plug the USB web cam into the micro USB port using a micro USB to USB adapter.
+4. Plug the Pi PSI and the Water Pump PSU into wall power.
+
+
+### Software
+
 Clone the repository onto the Raspberry Pi and set the following environment variables:
 
 ```
@@ -61,6 +77,23 @@ IMGUR_CLIENT_SECRET=[Imgur API Client Secret (If using webcam)]
 ```
 
 The example above counts votes and waters at midnight, updates the live photo at 1 pm, and reads the sensors every 15 minutes.
+
+To test the web app locally, run:
+
+```
+flask --debug --app=application.py run
+```
+
+To add posts to the 'News' tab, run the following command locally, run:
+
+
+```
+python news_app.py
+```
+
+then go to [http://localhost:5001](http://localhost:5001) in your web browser, and submit the post.
+
+
 ## History
 
 ### Smart Garden v1 (2018-2020)
