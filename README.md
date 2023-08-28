@@ -30,7 +30,7 @@ A PostgreSQL database is required for storing votes, sensor data, and other rele
 
 ### Hardware
 
-1. Wire up the sensors as follows:
+1. Wire up the sensors/pump as follows:
     - Capacitive Sensor Output to A1 on the Pi HAT
     - Capacitive Sensor 5v and Ground to 5v and Ground on the Pi Hat
     - Water Pump PSU Ground to Ground on the Pi HAT
