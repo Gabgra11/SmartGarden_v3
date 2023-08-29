@@ -4,31 +4,19 @@
 
 Smart Garden v3 allows users to collectively care for a single house plant. Live moisture, humidity, and temperature data can be used to decide whether the plant should be watered today. Historical trends can be used to track watering patterns and influence future decisions.
 
+
 ## Hardware
 
-Smart Garden requires the following hardware:
+Smart Garden uses the following hardware:
 
-* Raspberry Pi (Any model with wifi or a wifi dongle) + PSU
+* Raspberry Pi Zero W + PSU
 * Pimoroni Automation HAT Mini
 * BME280 module
 * Capacitive Soil Moisture sensor
-* USB Web Cam
-* 5V DC Submersible Water Pump + Tubing
-* 5V DC PSU
+* USB Web Cam + Micro USB to USB Adapter
+* 5V DC Submersible Water Pump + Tubing + PSU
 
-The Automation Hat allows the Pi to control the water pump via its relay. The analog inputs also allow for capacitive soil moisture readings. 
-
-## Software
-
-The Raspberry Pi runs a Python script which collects sensor data and pushes it to the web app. At the specified time, votes are counted. Majority vote determines whether the water pump is triggered. 
-
-Google Authentication is used to securely prevent duplicate votes. This makes voting fair, safe, and accessible.
-
-A PostgreSQL database is required for storing votes, sensor data, and other relevant data. An easy way to host the web app and PostgreSQL server is AWS Elastic Beanstalk.
-
-## Setup
-
-### Hardware
+The Automation Hat allows the Pi to control the water pump via its relay. The analog inputs also allow for capacitive soil moisture readings.
 
 1. Wire up the sensors/pump as follows:
     - Capacitive Sensor Output to A1 on the Pi HAT
@@ -42,8 +30,16 @@ A PostgreSQL database is required for storing votes, sensor data, and other rele
 4. Plug the Pi PSI and the Water Pump PSU into wall power.
 
 
-### Software
+## Software
 
+The Raspberry Pi runs a Python script which collects sensor data and pushes it to the web app's database. Another script is run at midnight to count the votes. Majority vote determines whether the water pump is triggered. 
+
+Google Sign In from Google Cloud Platform is used to securely prevent duplicate votes. This makes voting fair, safe, and accessible.
+
+A PostgreSQL database is used for storing votes, sensor data, and other relevant data. An easy way to host the web app and PostgreSQL server is AWS Elastic Beanstalk with AWS RDS.
+
+### 1. Setting up the environment
+___
 Clone the repository onto the Raspberry Pi and set the following environment variables:
 
 ```
@@ -77,14 +73,31 @@ IMGUR_CLIENT_SECRET=[Imgur API Client Secret (If using webcam)]
 ```
 
 The example above counts votes and waters at midnight, updates the live photo at 1 pm, and reads the sensors every 15 minutes.
+<br/><br/>
+### 2. Setting up the SQL database
+___
+From the root directory, navigate to /db/:
 
-To test the web app locally, run:
+```
+cd db
+```
+
+and run:
+```
+python init_db.py
+```
+
+This will create the necessary tables from the schema specified in ```schema.sql```. This script can be run again at any time to clear **all** entries in the database.
+<br/><br/>
+### 3. Testing the web app
+___
+To test the web app locally, ensure you are in the root directory and run:
 
 ```
 flask --debug --app=application.py run
 ```
 
-To add posts to the 'News' tab, run the following command locally, run:
+To add posts to the 'News' tab, run the following command locally:
 
 
 ```
