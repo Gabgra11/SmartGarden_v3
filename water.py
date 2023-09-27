@@ -11,7 +11,7 @@ duration = os.getenv('water_duration', 1.5)
 backup_water_interval = os.getenv('backup_water_interval', 3)
 
 def water(duration):
-    yes_votes, no_votes = db.get_vote_counts()
+    yes_votes, no_votes = db.get_vote_counts(-1)
 
     if yes_votes == None or no_votes == None:   # DB Connection failure.
         # Use backup watering schedule (Water every <backup_water_interval> days):

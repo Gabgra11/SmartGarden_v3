@@ -121,14 +121,14 @@ def get_user_vote(user_id):
         return None
 
 # Returns vote counts as (yes_votes, no_votes):
-def get_vote_counts():
+def get_vote_counts(day_offset=0):
     conn = get_db_connection()
 
     if not conn:
         print("Error in get_vote_counts. get_db_connection failed.")
         return None, None
 
-    midnight, end_of_day = get_current_date_window(-1) # -1 is the day offset. Need yesterday's range.
+    midnight, end_of_day = get_current_date_window(day_offset) # -1 is the day offset. Need yesterday's range.
 
     command = 'SELECT vote, COUNT(*) as count FROM votes WHERE timestamp BETWEEN {} AND {} GROUP BY vote'
     with conn.cursor() as cur:
